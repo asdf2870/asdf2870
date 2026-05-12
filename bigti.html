@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>雀友記 - 仙緣奇遇錄</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#f6ece2",
+              "primary": "#436738",
+              "secondary": "#894e45",
+              "tertiary": "#5d5e91", 
+              "background": "#fff8f3",
+              "outline-variant": "#c3c8bc",
+            },
+            borderRadius: {
+              "DEFAULT": "1rem",
+              "lg": "2rem",
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+        body { background-color: #fff8f3; font-family: 'Quicksand', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .active-press:active { transform: scale(0.96); }
+        .custom-scrollbar::-webkit-scrollbar { height: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c3c8bc; border-radius: 10px; }
+        main { max-width: 480px !important; margin: 0 auto; }
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body x-data="{
+    selectedPlayer: '王小明',
+    activeTab: 'fortune',
+    selectedRules: [], 
+    isSelfDrawn: false,
+    manualTai: 0,
+    showSuccess: false,
+    players: ['王小明', '李大華', '陳小雲'],
+    
+    fortuneRules: [
+        { id: 1, name: '大三元', tai: 8, xianqi: 800, icon: 'filter_3' },
+        { id: 2, name: '小四喜', tai: 8, xianqi: 600, icon: 'filter_4' },
+        { id: 3, name: '咪幾', tai: 4, xianqi: 400, icon: 'music_note' },
+        { id: 4, name: '清一色', tai: 8, xianqi: 1200, icon: 'diamond' },
+        { id: 5, name: '大四喜', tai: 16, xianqi: 2000, icon: 'brightness_7' },
+        { id: 6, name: '七搶一', tai: 8, xianqi: 1500, icon: 'swords' },
+        { id: 7, name: '八仙過海', tai: 16, xianqi: 3000, icon: 'stars' }
+    ],
+    
+    tribulationRules: [
+        { id: 101, name: '放槍', tai: -1, xianqi: -100, icon: 'heart_broken' },
+        { id: 102, name: '大失血', tai: -3, xianqi: -500, icon: 'error' },
+        { id: 103, name: '包牌', tai: -8, xianqi: -1200, icon: 'gavel' },
+        { id: 104, name: '詐胡', tai: -16, xianqi: -3000, icon: 'warning' }
+    ],
+
+    get currentRules() {
+        return this.activeTab === 'fortune' ? this.fortuneRules : this.tribulationRules;
+    },
+
+    toggleRule(rule) {
+        const index = this.selectedRules.findIndex(r => r.id === rule.id);
+        if (index === -1) {
+            this.selectedRules.push(rule);
+        } else {
+            this.selectedRules.splice(index, 1);
+        }
+    },
+
+    isSelected(id) {
+        return this.selectedRules.some(r => r.id === id);
+    },
+
+    get totalTai() {
+        let base = this.selectedRules.reduce((sum, r) => sum + r.tai, 0);
+        let bonus = this.isSelfDrawn ? 1 : 0;
+        return base + bonus + (parseInt(this.manualTai) || 0);
+    },
+
+    get totalXianqi() {
+        let base = this.selectedRules.reduce((sum, r) => sum + r.xianqi, 0);
+        let bonus = this.isSelfDrawn ? 200 : 0;
+        return base + bonus;
+    },
+
+    saveAndShow() {
+        this.showSuccess = true;
+    },
+
+    resetAll() {
+        this.selectedRules = [];
+        this.isSelfDrawn = false;
+        this.manualTai = 0;
+        this.showSuccess = false;
+    }
+}">
+
+    <main class="w-full px-4 pb-32 pt-6">
+        <section class="mb-8 text-center">
+            <h2 class="text-2xl font-bold text-primary mb-1">仙緣奇遇錄</h2>
+            <p class="text-sm text-gray-500 italic">台數與修為的複式紀錄</p>
+        </section>
+
+        <!-- Player Selection -->
+        <section class="mb-6">
+            <h3 class="text-sm font-bold text-gray-700 mb-3">仙班名冊</h3>
+            <div class="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+                <template x-for="player in players" :key="player">
+                    <button 
+                        @click="selectedPlayer = player"
+                        class="px-6 py-2 rounded-lg border-2 transition-all active-press shrink-0"
+                        :class="selectedPlayer === player ? 'bg-primary text-white border-primary shadow-md' : 'bg-white border-outline-variant text-gray-600'"
+                    >
+                        <span class="text-sm font-bold" x-text="player"></span>
+                    </button>
+                </template>
+            </div>
+        </section>
+
+        <div class="flex bg-gray-200 rounded-full p-1 mb-6">
+            <button @click="activeTab = 'fortune'; selectedRules = []"
+                class="flex-1 py-2 rounded-full text-sm font-bold transition-all flex items-center justify-center gap-2"
+                :class="activeTab === 'fortune' ? 'bg-white text-primary shadow-sm' : 'text-gray-500'">
+                <span class="material-symbols-outlined text-lg">auto_awesome</span>仙緣
+            </button>
+            <button @click="activeTab = 'tribulation'; selectedRules = []"
+                class="flex-1 py-2 rounded-full text-sm font-bold transition-all flex items-center justify-center gap-2"
+                :class="activeTab === 'tribulation' ? 'bg-white text-secondary shadow-sm' : 'text-gray-500'">
+                <span class="material-symbols-outlined text-lg">bolt</span>渡劫
+            </button>
+        </div>
+
+        <!-- Achievement Grid (Multi-select) -->
+        <section class="mb-6">
+            <div class="grid grid-cols-2 gap-3">
+                <template x-for="rule in currentRules" :key="rule.id">
+                    <button 
+                        @click="toggleRule(rule)"
+                        class="flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left active-press bg-white relative group"
+                        :class="isSelected(rule.id) ? 'border-primary bg-primary/5 shadow-inner' : 'border-transparent shadow-sm'"
+                    >
+                        <div x-show="isSelected(rule.id)" class="absolute top-1 right-1">
+                            <span class="material-symbols-outlined text-primary text-sm">check_circle</span>
+                        </div>
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0"
+                             :class="isSelected(rule.id) ? 'bg-primary text-white' : 'bg-gray-100 text-primary'">
+                            <span class="material-symbols-outlined text-xl" x-text="rule.icon"></span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm font-bold truncate text-gray-800" x-text="rule.name"></p>
+                            <div class="flex flex-col gap-0.5 mt-0.5">
+                                <span class="text-[10px] font-bold text-primary" x-text="(rule.tai > 0 ? '+' : '') + rule.tai + ' 台'"></span>
+                                <span class="text-[10px] font-bold text-tertiary" x-text="(rule.xianqi > 0 ? '+' : '') + rule.xianqi + ' 仙氣'"></span>
+                            </div>
+                        </div>
+                    </button>
+                </template>
+            </div>
+        </section>
+
+        <!-- Toggle: Self Drawn -->
+        <section class="mb-6">
+            <button @click="isSelfDrawn = !isSelfDrawn"
+                class="w-full p-4 rounded-xl flex justify-between items-center transition-all border-2"
+                :class="isSelfDrawn ? 'bg-primary/10 border-primary' : 'bg-white border-transparent shadow-sm'">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-primary">front_hand</span>
+                    <div>
+                        <p class="text-sm font-bold text-gray-800">自摸加成</p>
+                        <p class="text-[10px] text-gray-500">+1 台 / +200 仙氣</p>
+                    </div>
+                </div>
+                <div class="w-10 h-6 rounded-full relative transition-colors" :class="isSelfDrawn ? 'bg-primary' : 'bg-gray-300'">
+                    <div class="absolute w-4 h-4 bg-white rounded-full top-1 left-1 transition-transform" :class="isSelfDrawn ? 'translate-x-4' : ''"></div>
+                </div>
+            </button>
+        </section>
+
+        <section class="mb-6">
+            <div class="bg-white rounded-2xl p-5 shadow-lg border border-primary/10 relative overflow-hidden">
+                <div class="flex gap-4 relative z-10">
+                    <!-- Left: Tai Calculation -->
+                    <div class="flex-1 border-r border-gray-100 pr-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-[10px] font-bold text-primary uppercase tracking-wider">台數計算</p>
+                        </div>
+                        <div class="space-y-1.5 min-h-[80px] max-h-[120px] overflow-y-auto custom-scrollbar">
+                            <template x-for="r in selectedRules" :key="r.id">
+                                <div class="flex justify-between text-[11px] text-gray-600">
+                                    <span class="truncate pr-2" x-text="r.name"></span>
+                                    <span class="font-bold" x-text="(r.tai > 0 ? '+' : '') + r.tai"></span>
+                                </div>
+                            </template>
+                            <div class="flex justify-between text-[11px] text-primary font-bold" x-show="isSelfDrawn">
+                                <span>自摸</span>
+                                <span>+1</span>
+                            </div>
+                            <!-- Manual Input Integration -->
+                            <div class="flex items-center justify-between gap-2 pt-2 mt-1 border-t border-dashed border-gray-100">
+                                <span class="text-[11px] font-bold text-gray-400">手動加台</span>
+                                <div class="flex items-center bg-gray-50 rounded px-1">
+                                    <span class="text-[10px] text-gray-400">+</span>
+                                    <input type="number" x-model="manualTai" class="w-10 h-6 text-center text-xs bg-transparent border-none p-0 font-bold text-primary focus:ring-0" placeholder="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t-2 border-primary/20">
+                            <p class="text-[10px] text-gray-400">總計台數</p>
+                            <p class="text-3xl font-bold text-primary" x-text="totalTai"></p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Xianqi Calculation -->
+                    <div class="flex-1 pl-2">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-[10px] font-bold text-tertiary uppercase tracking-wider">仙氣結算</p>
+                        </div>
+                        <div class="space-y-1.5 min-h-[80px] max-h-[120px] overflow-y-auto custom-scrollbar">
+                            <template x-for="r in selectedRules" :key="'xq-'+r.id">
+                                <div class="flex justify-between text-[11px] text-gray-600">
+                                    <span class="truncate pr-2" x-text="r.name"></span>
+                                    <span class="font-bold text-tertiary" x-text="(r.xianqi > 0 ? '+' : '') + r.xianqi"></span>
+                                </div>
+                            </template>
+                            <div class="flex justify-between text-[11px] text-tertiary font-bold" x-show="isSelfDrawn">
+                                <span>修為爆發</span>
+                                <span>+200</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-3 border-t-2 border-tertiary/20">
+                            <p class="text-[10px] text-gray-400">總計仙氣</p>
+                            <p class="text-3xl font-bold text-tertiary" x-text="totalXianqi"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -right-6 -bottom-6 opacity-[0.05]">
+                    <span class="material-symbols-outlined text-[100px] text-primary">auto_awesome_motion</span>
+                </div>
+            </div>
+        </section>
+
+        <button @click="saveAndShow()" class="w-full py-4 bg-primary text-white font-bold rounded-full shadow-lg active-press flex items-center justify-center gap-3">
+            <span class="material-symbols-outlined">save</span>
+            確認存入仙冊
+        </button>
+    </main>
+
+    <!-- Success Modal -->
+    <div x-show="showSuccess" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm" x-transition>
+        <div class="bg-white w-full max-w-xs rounded-2xl p-8 text-center shadow-2xl scale-in transform transition-all" @click.away="resetAll()">
+            <div class="w-20 h-20 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-[48px]">verified</span>
+            </div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">紀錄成功</h2>
+            <p class="text-sm text-gray-500 mb-6">已將成果載入 <span class="text-primary font-bold" x-text="selectedPlayer"></span> 的仙冊之中</p>
+            
+            <div class="bg-surface-container rounded-xl p-4 mb-8 flex justify-around">
+                <div>
+                    <p class="text-[10px] text-gray-400">最終台數</p>
+                    <p class="text-lg font-bold text-primary" x-text="totalTai"></p>
+                </div>
+                <div class="w-px h-8 bg-gray-200"></div>
+                <div>
+                    <p class="text-[10px] text-gray-400">所得仙氣</p>
+                    <p class="text-lg font-bold text-tertiary" x-text="totalXianqi"></p>
+                </div>
+            </div>
+
+            <button @click="resetAll()" class="w-full py-3 bg-primary text-white font-bold rounded-full active-press shadow-md">
+                回報大廳
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 flex justify-around items-center px-4 pb-8 pt-3 bg-white/90 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-3xl">
+        <div class="flex flex-col items-center opacity-40"><span class="material-symbols-outlined">home</span><span class="text-[10px]">大廳</span></div>
+        <div class="flex flex-col items-center text-primary"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">edit_note</span><span class="text-[10px] font-bold">登記</span></div>
+        <div class="flex flex-col items-center opacity-40"><span class="material-symbols-outlined">leaderboard</span><span class="text-[10px]">數據</span></div>
+    </nav>
+
+</body>
+</html>

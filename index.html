@@ -1,0 +1,483 @@
+<html lang="zh-Hant"><head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>小仙女集合中心 - 儀表板</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        "colors": {
+                            "outline-variant": "#c3c8bc",
+                            "on-error": "#ffffff",
+                            "primary-container": "#98c189",
+                            "on-tertiary-fixed": "#1e1c10",
+                            "surface-container-lowest": "#ffffff",
+                            "surface-bright": "#fff8f3",
+                            "surface-variant": "#eae1d6",
+                            "on-secondary-fixed-variant": "#6d3830",
+                            "on-background": "#1f1b15",
+                            "surface-container-low": "#fcf2e7",
+                            "secondary-fixed": "#ffdad4",
+                            "on-secondary-fixed": "#370e08",
+                            "inverse-surface": "#343029",
+                            "primary-fixed": "#c4eeb3",
+                            "inverse-on-surface": "#f9efe4",
+                            "on-secondary": "#ffffff",
+                            "on-primary-container": "#2c4f23",
+                            "tertiary-container": "#bcb6a4",
+                            "surface-container-high": "#f0e7dc",
+                            "tertiary-fixed": "#e9e2d0",
+                            "tertiary-fixed-dim": "#ccc6b4",
+                            "error": "#ba1a1a",
+                            "primary": "#436738",
+                            "on-primary": "#ffffff",
+                            "surface-tint": "#436738",
+                            "on-surface-variant": "#43493f",
+                            "surface": "#fff8f3",
+                            "secondary-fixed-dim": "#ffb4a8",
+                            "on-tertiary": "#ffffff",
+                            "on-primary-fixed-variant": "#2c4f23",
+                            "primary-fixed-dim": "#a8d298",
+                            "inverse-primary": "#a8d298",
+                            "on-tertiary-container": "#4b473a",
+                            "on-surface": "#1f1b15",
+                            "on-primary-fixed": "#012200",
+                            "secondary": "#894e45",
+                            "on-tertiary-fixed-variant": "#4a4739",
+                            "tertiary": "#625e50",
+                            "surface-container-highest": "#eae1d6",
+                            "surface-container": "#f6ece2",
+                            "outline": "#73796e",
+                            "surface-dim": "#e2d9ce",
+                            "on-error-container": "#93000a",
+                            "error-container": "#ffdad6",
+                            "background": "#fff8f3",
+                            "on-secondary-container": "#794139",
+                            "secondary-container": "#fdb1a5"
+                        },
+                        "borderRadius": {
+                            "DEFAULT": "1rem",
+                            "lg": "2rem",
+                            "xl": "3rem",
+                            "full": "9999px"
+                        },
+                        "spacing": {
+                            "md": "20px",
+                            "lg": "32px",
+                            "xl": "48px",
+                            "base": "8px",
+                            "sm": "12px",
+                            "container-padding": "24px",
+                            "xs": "4px"
+                        },
+                        "fontFamily": {
+                            "headline-lg-mobile": ["Quicksand"],
+                            "body-lg": ["Quicksand"],
+                            "headline-sm": ["Quicksand"],
+                            "headline-md": ["Quicksand"],
+                            "headline-lg": ["Quicksand"],
+                            "label-lg": ["Quicksand"],
+                            "body-md": ["Quicksand"]
+                        },
+                        "fontSize": {
+                            "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                            "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                            "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                            "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                            "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                            "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                            "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "500"}]
+                        }
+                    },
+                },
+            }
+        </script>
+    <style>
+            body { font-family: 'Quicksand', sans-serif; background-color: #fff8f3; color: #1f1b15; }
+            .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+            .bouncy-shadow { box-shadow: 0 4px 0 rgba(93, 87, 79, 0.08), 0 10px 20px rgba(93, 87, 79, 0.05); }
+            .mahjong-card { transition: transform 0.2s; }
+            .mahjong-card:active { transform: scale(0.98); }
+            
+            @keyframes fortune-shake {
+                0% { transform: rotate(0deg); }
+                25% { transform: rotate(5deg); }
+                50% { transform: rotate(0deg); }
+                75% { transform: rotate(-5deg); }
+                100% { transform: rotate(0deg); }
+            }
+            .fortune-animating { animation: fortune-shake 0.15s ease-in-out infinite; }
+            
+            /* Custom date range style */
+            .date-range-container input[type="date"]::-webkit-calendar-picker-indicator {
+                background: transparent;
+                bottom: 0;
+                color: transparent;
+                cursor: pointer;
+                height: auto;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: auto;
+            }
+    
+            /* 滾軸美化與高度限制 (約 6 行高) */
+            .ranking-scroll-area {
+                max-height: 330px; 
+                overflow-y: auto;
+                scrollbar-width: thin;
+            }
+            .ranking-scroll-area::-webkit-scrollbar { width: 4px; }
+            .ranking-scroll-area::-webkit-scrollbar-track { background: transparent; }
+            .ranking-scroll-area::-webkit-scrollbar-thumb { background: rgba(67, 103, 56, 0.2); border-radius: 10px; }
+        </style>
+    </head>
+    <body class="bg-background min-h-screen pb-32">
+    <header class="bg-surface sticky top-0 z-40">
+    <div class="flex items-center w-full px-container-padding py-md max-w-[600px] mx-auto justify-between">
+    <h1 class="font-headline-md text-headline-md font-bold text-primary">小仙女集合中心</h1>
+    <a class="flex items-center gap-xs bg-primary-container/20 text-primary px-sm py-xs rounded-full border border-primary/20 hover:bg-primary-container/40 transition-all active:scale-95 group" href="login.html">
+        <span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+        <span class="font-label-lg">管理員模式</span>
+    </a>
+    </div>
+    </header>
+    <main class="max-w-[600px] mx-auto px-container-padding space-y-lg mt-sm">
+    <section class="flex flex-col gap-sm">
+    <div>
+    <h2 class="font-headline-sm text-headline-sm">歡迎來到九重天</h2>
+    <div class="flex flex-col gap-xs mt-sm">
+    <div class="flex flex-col gap-sm items-start">
+    <p class="font-body-md text-on-surface-variant">今日手氣：</p>
+    <button class="flex items-center gap-xs bg-secondary-container/30 text-on-secondary-container px-lg py-sm rounded-full border border-secondary/20 hover:bg-secondary-container/50 transition-all active:scale-95 group" id="fortune-draw-btn">
+    <span class="font-bold text-secondary" id="fortune-text">點我抽籤</span>
+    <span class="material-symbols-outlined text-[20px]" id="fortune-icon">casino</span>
+    </button>
+    <div class="hidden flex flex-col gap-xs animate-in fade-in slide-in-from-top-1 duration-300" id="fortune-result-area">
+    <div class="font-headline-md text-primary" id="fortune-title"></div>
+    <div class="font-body-md text-on-surface-variant leading-relaxed italic" id="fortune-description"></div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    <section class="space-y-sm">
+    <div class="flex items-center justify-between">
+    <h3 class="font-headline-sm text-headline-sm">仙友排行</h3>
+    </div>
+    <!-- 日期與搜尋控制 -->
+    <div class="flex flex-col gap-sm">
+        <div class="grid grid-cols-2 gap-sm">
+        <div class="relative flex items-center justify-between gap-sm bg-surface-container-high px-md py-sm rounded-full border border-outline-variant/30 date-range-container">
+        <div class="flex items-center gap-xs overflow-hidden">
+        <span class="material-symbols-outlined text-[18px] text-on-surface-variant">event</span>
+        <span class="font-label-lg text-on-surface truncate" id="start-date-display">開始日期</span>
+        </div>
+        <input class="absolute inset-0 opacity-0 cursor-pointer" id="rank-start-picker" type="date"/>
+        </div>
+        <div class="relative flex items-center justify-between gap-sm bg-surface-container-high px-md py-sm rounded-full border border-outline-variant/30 date-range-container">
+        <div class="flex items-center gap-xs overflow-hidden">
+        <span class="material-symbols-outlined text-[18px] text-on-surface-variant">event</span>
+        <span class="font-label-lg text-on-surface truncate" id="end-date-display">結束日期</span>
+        </div>
+        <input class="absolute inset-0 opacity-0 cursor-pointer" id="rank-end-picker" type="date"/>
+        </div>
+        </div>
+        <button id="search-ranking-btn" class="w-full flex items-center justify-center gap-xs bg-primary/10 text-primary py-sm rounded-full border border-primary/20 hover:bg-primary/20 transition-all active:scale-95">
+            <span class="material-symbols-outlined text-[20px]">search</span>
+            <span class="font-label-lg">搜尋區間數據</span>
+        </button>
+    </div>
+    
+    <!-- 排行榜清單 -->
+    <div class="bg-surface-container-low rounded-lg bouncy-shadow overflow-hidden">
+        <div id="ranking-scroll-container" class="ranking-scroll-area">
+            <div id="ranking-list">
+                <!-- Rank 1 (預設顯示) -->
+                <div class="flex items-center justify-between p-md border-b border-outline-variant/30">
+                <div class="flex items-center gap-md">
+                <div class="w-8 h-8 flex items-center justify-center bg-primary text-on-primary rounded-full font-bold">1</div>
+                <span class="font-body-md font-bold">王小明</span>
+                </div>
+                <div class="flex flex-col items-end">
+                <span class="text-primary font-bold">2420 / 12 將</span>
+                <span class="text-on-surface-variant text-[12px] opacity-70">(均 202)</span>
+                </div>
+                </div>
+                <!-- Rank 2 (預設顯示) -->
+                <div class="flex items-center justify-between p-md border-b border-outline-variant/30">
+                <div class="flex items-center gap-md">
+                <div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold">2</div>
+                <span class="font-body-md font-bold">李大衛</span>
+                </div>
+                <div class="flex flex-col items-end">
+                <span class="text-primary font-bold">2250 / 15 將</span>
+                <span class="text-on-surface-variant text-[12px] opacity-70">(均 150)</span>
+                </div>
+                </div>
+                <!-- Rank 3 (預設顯示) -->
+                <div class="flex items-center justify-between p-md border-b border-outline-variant/30">
+                <div class="flex items-center gap-md">
+                <div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold">3</div>
+                <span class="font-body-md font-bold">陳小華</span>
+                </div>
+                <div class="flex flex-col items-end">
+                <span class="text-primary font-bold">2150 / 20 將</span>
+                <span class="text-on-surface-variant text-[12px] opacity-70">(均 108)</span>
+                </div>
+                </div>
+    
+                <!-- 中間隱藏名次 (4-11) -->
+                <div id="expanded-ranks" class="hidden">
+                    <div class="flex items-center justify-between p-md border-b border-outline-variant/30 bg-surface-container-low/50">
+                        <div class="flex items-center gap-md"><div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">4</div><span class="font-body-md">張小芳</span></div>
+                        <div class="flex flex-col items-end"><span class="text-on-surface font-medium">1800 / 10 將</span></div>
+                    </div>
+                    <div class="flex items-center justify-between p-md border-b border-outline-variant/30 bg-surface-container-low/50">
+                        <div class="flex items-center gap-md"><div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">5</div><span class="font-body-md">黃大勇</span></div>
+                        <div class="flex flex-col items-end"><span class="text-on-surface font-medium">1550 / 14 將</span></div>
+                    </div>
+                    <div class="flex items-center justify-between p-md border-b border-outline-variant/30 bg-surface-container-low/50">
+                        <div class="flex items-center gap-md"><div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">6</div><span class="font-body-md">林小東</span></div>
+                        <div class="flex flex-col items-end"><span class="text-on-surface font-medium">1200 / 10 將</span></div>
+                    </div>
+                    <div class="flex items-center justify-between p-md border-b border-outline-variant/30 bg-surface-container-low/50">
+                        <div class="flex items-center gap-md"><div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">7</div><span class="font-body-md">趙小虎</span></div>
+                        <div class="flex flex-col items-end"><span class="text-on-surface font-medium">950 / 8 將</span></div>
+                    </div>
+                    <div class="flex items-center justify-between p-md border-b border-outline-variant/30 bg-surface-container-low/50">
+                        <div class="flex items-center gap-md"><div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">8</div><span class="font-body-md">孫小美</span></div>
+                        <div class="flex flex-col items-end"><span class="text-on-surface font-medium">800 / 6 將</span></div>
+                    </div>
+                    <div class="flex items-center justify-between p-md border-b border-outline-variant/30 bg-surface-container-low/50">
+                        <div class="flex items-center gap-md"><div class="w-8 h-8 flex items-center justify-center bg-surface-container-highest text-on-surface-variant rounded-full font-bold text-xs">9</div><span class="font-body-md">周大通</span></div>
+                        <div class="flex flex-col items-end"><span class="text-on-surface font-medium">600 / 12 將</span></div>
+                    </div>
+                </div>
+    
+                <!-- 最後一名 (預設顯示) -->
+                <div class="flex items-center justify-between p-md" id="bottom-rank-item">
+                <div class="flex items-center gap-md">
+                <div class="w-8 h-8 flex items-center justify-center bg-error-container text-error rounded-full font-bold">12</div>
+                <span class="font-body-md font-bold">林美玲</span>
+                </div>
+                <div class="flex flex-col items-end">
+                <span class="text-error font-bold">-180 / 8 將</span>
+                <span class="text-on-surface-variant text-[12px] opacity-70">(均 -23)</span>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- 展開按鈕 -->
+        <button class="w-full px-md py-sm bg-surface-container-high/30 flex items-center justify-center gap-xs hover:bg-surface-container-high/50 transition-colors border-t border-outline-variant/30" id="toggle-ranking">
+            <span class="font-label-lg text-outline">展開完整榜單</span>
+            <span class="material-symbols-outlined text-outline text-[24px]" id="toggle-icon">expand_more</span>
+        </button>
+    </div>
+    </section>
+    
+    <section class="space-y-sm">
+    <div class="flex items-center justify-between">
+    <h3 class="font-headline-sm text-headline-sm">仙班名冊</h3>
+    <a href="roster.html" class="bg-primary-container/20 text-primary px-sm py-xs rounded-full border border-primary/20 font-label-lg hover:bg-primary-container/40 transition-all active:scale-95">名冊</a>
+    </div>
+    <div class="grid grid-cols-4 gap-md">
+    <div class="flex flex-col items-center gap-xs mahjong-card relative group">
+    <a class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-container bg-surface-container relative" href="user_profile.html">
+    <img alt="王小明" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyQWSppjnesCUb0ahs2Pyw66hygDVjG-3ceu8akdLCL9UaCbdgGlh-XdYQWq8-G9eXD2AcNv2QCgrHy6qnGfB7gL7BOIlSNyBQ62ad2Q3c-qZc9Id1dX2SMyJBW3O3dnk6TVU-Lrr9xSqlPAEehIIx5p1NYSmPoZGvtBM6xHk0JN5AZYNFnDFk-lTrY2cf4X0EiFnjjXb9EgUE0EW-vaAXO2Bim7e_PmiTe7OkmaiTIFWh_6mFX5XMI-pTbLDP6aqg6Vpg1Qq6j6s"/>
+    </a>
+    <span class="font-label-lg">王小明</span>
+    </div>
+    <div class="flex flex-col items-center gap-xs mahjong-card relative group">
+    <a class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-container bg-surface-container relative" href="user_profile.html">
+    <img alt="陳小華" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyQWSppjnesCUb0ahs2Pyw66hygDVjG-3ceu8akdLCL9UaCbdgGlh-XdYQWq8-G9eXD2AcNv2QCgrHy6qnGfB7gL7BOIlSNyBQ62ad2Q3c-qZc9Id1dX2SMyJBW3O3dnk6TVU-Lrr9xSqlPAEehIIx5p1NYSmPoZGvtBM6xHk0JN5AZYNFnDFk-lTrY2cf4X0EiFnjjXb9EgUE0EW-vaAXO2Bim7e_PmiTe7OkmaiTIFWh_6mFX5XMI-pTbLDP6aqg6Vpg1Qq6j6s"/>
+    </a>
+    <span class="font-label-lg">陳小華</span>
+    </div>
+    <div class="flex flex-col items-center gap-xs mahjong-card relative group">
+    <a class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-container bg-surface-container relative" href="user_profile.html">
+    <img alt="李大衛" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyQWSppjnesCUb0ahs2Pyw66hygDVjG-3ceu8akdLCL9UaCbdgGlh-XdYQWq8-G9eXD2AcNv2QCgrHy6qnGfB7gL7BOIlSNyBQ62ad2Q3c-qZc9Id1dX2SMyJBW3O3dnk6TVU-Lrr9xSqlPAEehIIx5p1NYSmPoZGvtBM6xHk0JN5AZYNFnDFk-lTrY2cf4X0EiFnjjXb9EgUE0EW-vaAXO2Bim7e_PmiTe7OkmaiTIFWh_6mFX5XMI-pTbLDP6aqg6Vpg1Qq6j6s"/>
+    </a>
+    <span class="font-label-lg">李大衛</span>
+    </div>
+    <div class="flex flex-col items-center gap-xs mahjong-card relative group">
+    <a class="w-14 h-14 rounded-full overflow-hidden border-2 border-primary-container bg-surface-container relative" href="user_profile.html">
+    <img alt="林美玲" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyQWSppjnesCUb0ahs2Pyw66hygDVjG-3ceu8akdLCL9UaCbdgGlh-XdYQWq8-G9eXD2AcNv2QCgrHy6qnGfB7gL7BOIlSNyBQ62ad2Q3c-qZc9Id1dX2SMyJBW3O3dnk6TVU-Lrr9xSqlPAEehIIx5p1NYSmPoZGvtBM6xHk0JN5AZYNFnDFk-lTrY2cf4X0EiFnjjXb9EgUE0EW-vaAXO2Bim7e_PmiTe7OkmaiTIFWh_6mFX5XMI-pTbLDP6aqg6Vpg1Qq6j6s"/>
+    </a>
+    <span class="font-label-lg">林美玲</span>
+    </div>
+    </div>
+    </section>
+    
+    <section>
+    <div class="flex items-center justify-between mb-sm">
+    <h3 class="font-headline-sm text-headline-sm">快捷操作</h3>
+    </div>
+    <div class="grid grid-cols-2 gap-md">
+        <a href="keyin.html" class="flex flex-col items-center justify-center gap-xs bg-primary text-on-primary py-md rounded-lg bouncy-shadow mahjong-card active:translate-y-[2px] transition-all">
+            <span class="material-symbols-outlined text-[28px]">add_circle</span>
+            <span class="font-label-lg">新增紀錄</span>
+        </a>
+        <a class="flex flex-col items-center justify-center gap-xs bg-secondary text-on-secondary py-md rounded-lg bouncy-shadow mahjong-card active:translate-y-[2px] transition-all" href="bigti.html">
+        <span class="material-symbols-outlined text-[28px]">auto_awesome</span>
+        <span class="font-label-lg">登記仙緣/渡劫</span>
+        </a>
+    </div>
+    </section>
+    
+    <section class="space-y-sm">
+    <div class="flex items-center justify-between">
+    <div class="flex items-center gap-xs">
+    <h3 class="font-headline-sm text-headline-sm">風雲榜</h3>
+    </div>
+    </div>
+    <div class="flex flex-col gap-sm">
+    <div class="flex items-center gap-md bg-surface-container-low p-md rounded-lg bouncy-shadow border border-primary-container/20">
+    <div class="w-14 h-14 bg-primary-container/20 rounded-full flex items-center justify-center flex-shrink-0">
+    <span class="material-symbols-outlined text-primary text-[32px]" data-weight="fill">workspace_premium</span>
+    </div>
+    <div class="flex-1">
+    <div class="flex flex-col">
+    <span class="font-headline-sm font-bold text-on-surface">胡最多台獎</span>
+    <div class="flex items-center justify-between mt-1">
+    <span class="text-on-surface-variant font-medium">王小明</span>
+    <span class="text-on-surface-variant text-[12px] opacity-60">2024/01/25</span>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </section>
+    
+    <section class="space-y-sm">
+    <div class="flex items-center justify-between">
+    <div class="flex items-center gap-xs">
+    <h3 class="font-headline-sm text-headline-sm">三界公文</h3>
+    </div>
+    </div>
+    <div class="flex flex-col gap-sm">
+    <div class="flex gap-md bg-surface-container-low p-md rounded-lg hover:bg-surface-container transition-colors items-start relative group bouncy-shadow border border-outline-variant/10 cursor-pointer mahjong-card">
+    <div class="w-12 h-12 rounded-xl bg-tertiary-container/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+    <span class="material-symbols-outlined text-tertiary">campaign</span>
+    </div>
+    <div class="flex-1">
+    <div class="flex justify-between items-start">
+    <h4 class="font-body-md font-bold text-on-surface pr-4">週末雀王爭霸賽報名開始</h4>
+    <span class="font-label-lg text-on-surface-variant/60 text-[12px] whitespace-nowrap">2 小時前</span>
+    </div>
+    <p class="font-label-lg text-on-surface-variant mt-xs leading-relaxed line-clamp-2">本週六將舉行冬季雀王熱身賽，歡迎各位雀友踴躍報名參加！</p>
+    </div>
+    </div>
+    </div>
+    </section>
+    </main>
+    
+    <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe pt-xs max-w-[600px] left-1/2 -translate-x-1/2 bg-surface-container-high shadow-[0_-4px_20px_rgba(93,87,79,0.08)] rounded-t-xl">
+        <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-md py-xs transition-all active:scale-90 min-w-[80px]" href="index.html">
+          <span class="material-symbols-outlined" data-weight="fill">home</span>
+          <span class="font-label-lg">大廳</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs hover:bg-surface-variant/50 transition-all active:scale-90 min-w-[80px]" href="keyin.html">
+          <span class="material-symbols-outlined">add_circle</span>
+          <span class="font-label-lg">登記紀錄</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs hover:bg-surface-variant/50 transition-all active:scale-90 min-w-[80px]" href="promate.html">
+          <span class="material-symbols-outlined">analytics</span>
+          <span class="font-label-lg">個人數據</span>
+        </a>
+    </nav>
+    
+    <script>
+        const fortunes = [
+            { title: "進貨達人", desc: "今天摸牌像在補貨，要什麼有什麼，連莊連到鄰居都來敲門。" },
+            { title: "穩健小仙", desc: "手氣穩如泰山，雖然沒大牌，但小胡不斷，也是種穩穩的幸福。" },
+            { title: "防守大師", desc: "今天適合防守，雖然胡牌慢，但放槍率極低，能守住就是贏。" },
+            { title: "綠茶仙子", desc: "手感略微生澀，建議多喝杯綠茶，抹茶色或許能帶來一點生機。" },
+            { title: "地雷探勘", desc: "今天摸牌像是在摸地雷，建議多看少動，當個安靜的美男子/美少女。" },
+            { title: "分母担当", desc: "手氣欠佳，放槍次數直追王小明，今天還是乖乖當個分母吧。" }
+        ];
+        
+        const fortuneBtn = document.getElementById('fortune-draw-btn');
+        const fortuneText = document.getElementById('fortune-text');
+        const fortuneResultArea = document.getElementById('fortune-result-area');
+        const fortuneTitle = document.getElementById('fortune-title');
+        const fortuneDesc = document.getElementById('fortune-description');
+        
+        fortuneBtn.addEventListener('click', () => {
+            fortuneBtn.classList.add('fortune-animating');
+            fortuneText.innerText = "正在求籤...";
+            fortuneResultArea.classList.add('hidden');
+            
+            setTimeout(() => {
+                fortuneBtn.classList.remove('fortune-animating');
+                const result = fortunes[Math.floor(Math.random() * fortunes.length)];
+                
+                fortuneTitle.innerText = result.title;
+                fortuneDesc.innerText = result.desc;
+                fortuneResultArea.classList.remove('hidden');
+                
+                fortuneBtn.classList.add('bg-primary-container/20', 'text-primary');
+                fortuneBtn.classList.remove('bg-secondary-container/30', 'text-on-secondary-container');
+                fortuneText.classList.add('text-primary');
+                fortuneText.classList.remove('text-secondary');
+                fortuneText.innerText = "重新抽籤";
+            }, 800);
+        });
+    
+        const toggleBtn = document.getElementById('toggle-ranking');
+        const expandedRanks = document.getElementById('expanded-ranks');
+        const toggleIcon = document.getElementById('toggle-icon');
+        const toggleLabel = toggleBtn.querySelector('span:first-child');
+        let isExpanded = false;
+    
+        toggleBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            expandedRanks.classList.toggle('hidden', !isExpanded);
+            toggleIcon.innerText = isExpanded ? 'expand_less' : 'expand_more';
+            toggleLabel.innerText = isExpanded ? '收起榜單' : '展開完整榜單';
+            
+            // 確保展開後如果內容過多會自動顯示捲軸 (CSS max-height 已設定)
+        });
+    
+        const startPicker = document.getElementById('rank-start-picker');
+        const endPicker = document.getElementById('rank-end-picker');
+        const startDisplay = document.getElementById('start-date-display');
+        const endDisplay = document.getElementById('end-date-display');
+        const searchBtn = document.getElementById('search-ranking-btn');
+    
+        function initDefaultDates() {
+            const now = new Date();
+            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().split('T')[0];
+            const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().split('T')[0];
+    
+            startPicker.value = firstDay;
+            endPicker.value = lastDay;
+            startDisplay.innerText = firstDay.replace(/-/g, '/');
+            endDisplay.innerText = lastDay.replace(/-/g, '/');
+        }
+    
+        startPicker.addEventListener('change', (e) => {
+            if (e.target.value) startDisplay.innerText = e.target.value.replace(/-/g, '/');
+        });
+    
+        endPicker.addEventListener('change', (e) => {
+            if (e.target.value) endDisplay.innerText = e.target.value.replace(/-/g, '/');
+        });
+    
+        searchBtn.addEventListener('click', () => {
+            // 搜尋邏輯模擬
+            searchBtn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[20px]">sync</span><span class="font-label-lg">更新中...</span>`;
+            setTimeout(() => {
+                searchBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]">search</span><span class="font-label-lg">搜尋區間數據</span>`;
+            }, 500);
+        });
+    
+        window.onload = initDefaultDates;
+    </script>
+    </body></html>

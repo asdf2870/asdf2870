@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>雀友記 - 戰績登記</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#eae1d6",
+                        "surface-variant": "#eae1d6",
+                        "surface-container-lowest": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#f0e7dc",
+                        "on-background": "#1f1b15",
+                        "primary-container": "#98c189",
+                        "tertiary": "#625e50",
+                        "on-tertiary-container": "#4b473a",
+                        "on-primary-fixed": "#012200",
+                        "outline-variant": "#c3c8bc",
+                        "primary": "#436738",
+                        "tertiary-fixed-dim": "#ccc6b4",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#c4eeb3",
+                        "inverse-surface": "#343029",
+                        "on-surface": "#1f1b15",
+                        "inverse-primary": "#a8d298",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#fff8f3",
+                        "surface-container-low": "#fcf2e7",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#794139",
+                        "outline": "#73796e",
+                        "secondary": "#894e45",
+                        "secondary-fixed-dim": "#ffb4a8",
+                        "surface-container": "#f6ece2",
+                        "tertiary-container": "#bcb6a4",
+                        "surface": "#fff8f3",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#fdb1a5",
+                        "inverse-on-surface": "#f9efe4",
+                        "primary-fixed-dim": "#a8d298",
+                        "tertiary-fixed": "#e9e2d0",
+                        "surface-dim": "#e2d9ce",
+                        "on-tertiary-fixed": "#1e1c10",
+                        "on-primary-container": "#2c4f23",
+                        "on-secondary-fixed": "#370e08",
+                        "on-tertiary-fixed-variant": "#4a4739",
+                        "surface-tint": "#436738",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#2c4f23",
+                        "on-surface-variant": "#43493f",
+                        "background": "#fff8f3",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#ffdad4",
+                        "on-secondary-fixed-variant": "#6d3830"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "xl": "48px",
+                        "md": "20px",
+                        "xs": "4px",
+                        "lg": "32px",
+                        "container-padding": "24px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Quicksand"],
+                        "body-md": ["Quicksand"],
+                        "headline-lg-mobile": ["Quicksand"],
+                        "headline-md": ["Quicksand"],
+                        "label-lg": ["Quicksand"],
+                        "headline-sm": ["Quicksand"],
+                        "headline-lg": ["Quicksand"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff8f3;
+        }
+        .bouncy-shadow {
+            box-shadow: 0 4px 0 rgba(67, 103, 56, 0.2), 0 10px 20px rgba(93, 87, 79, 0.08);
+        }
+        .bouncy-shadow:active {
+            box-shadow: 0 2px 0 rgba(67, 103, 56, 0.2), 0 5px 10px rgba(93, 87, 79, 0.08);
+            transform: translateY(2px);
+        }
+        /* Custom number input hide arrows */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+
+<header class="bg-surface dark:bg-surface-dim sticky top-0 z-40 border-b border-surface-container-high/50">
+    <div class="flex justify-between items-center w-full px-container-padding py-md max-w-[600px] mx-auto">
+        <div class="flex items-center gap-sm">
+            <button class="material-symbols-outlined text-primary p-xs hover:bg-surface-container-high rounded-full transition-colors active:scale-95">arrow_back</button>
+            <h1 class="font-bold text-[24px] text-primary">戰績登記</h1>
+        </div>
+        <div class="flex gap-sm">
+            <span class="material-symbols-outlined text-on-surface-variant p-xs hover:bg-surface-container-high rounded-full transition-colors cursor-pointer">history</span>
+            <span class="material-symbols-outlined text-on-surface-variant p-xs hover:bg-surface-container-high rounded-full transition-colors cursor-pointer">settings</span>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-[600px] mx-auto px-container-padding pt-md space-y-lg">
+    
+    <section class="space-y-sm">
+        <h3 class="font-headline-sm text-on-surface-variant px-xs flex items-center gap-xs">
+            <span class="material-symbols-outlined text-[20px]">rebase_edit</span> 打幾將？
+        </h3>
+        <div class="flex items-center gap-4 bg-white p-6 rounded-2xl shadow-sm border border-surface-container w-full">
+            <div class="flex items-center gap-6 mx-auto">
+                <button onclick="adjustRounds(-1)" class="w-14 h-14 flex items-center justify-center bg-surface-container-high rounded-full text-primary hover:bg-primary hover:text-white transition-all active:scale-90">
+                    <span class="material-symbols-outlined text-[28px]">remove</span>
+                </button>
+                <div class="flex flex-col items-center">
+                    <input id="roundsInput" class="w-24 text-center bg-transparent border-none focus:ring-0 p-0 text-[48px] font-bold text-primary" max="99" min="1" type="number" value="1" onchange="calculateResults()"/>
+                </div>
+                <button onclick="adjustRounds(1)" class="w-14 h-14 flex items-center justify-center bg-surface-container-high rounded-full text-primary hover:bg-primary hover:text-white transition-all active:scale-90">
+                    <span class="material-symbols-outlined text-[28px]">add</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="flex flex-wrap items-center justify-between gap-2 mt-4">
+            <div class="flex-1 flex items-center gap-xs bg-white px-4 py-3 rounded-xl border border-surface-container min-w-[100px]">
+                <span class="text-label-lg text-on-surface-variant font-bold">底</span>
+                <input id="basePrice" class="w-full bg-transparent border-none p-0 text-center font-bold text-primary focus:ring-0" type="number" value="100" oninput="calculateResults()"/>
+            </div>
+            <div class="flex-1 flex items-center gap-xs bg-white px-4 py-3 rounded-xl border border-surface-container min-w-[100px]">
+                <span class="text-label-lg text-on-surface-variant font-bold">台</span>
+                <input id="pointPrice" class="w-full bg-transparent border-none p-0 text-center font-bold text-primary focus:ring-0" type="number" value="20" oninput="calculateResults()"/>
+            </div>
+            <div class="flex-1 flex items-center gap-xs bg-white px-4 py-3 rounded-xl border border-surface-container min-w-[100px]">
+                <span class="text-label-lg text-on-surface-variant font-bold">東</span>
+                <input id="eastPrice" class="w-full bg-transparent border-none p-0 text-center font-bold text-primary focus:ring-0" type="number" value="200" oninput="calculateResults()"/>
+            </div>
+        </div>
+    </section>
+
+    <section class="space-y-md">
+        <div class="flex justify-between items-center px-xs">
+            <h3 class="font-headline-sm text-on-surface-variant">玩家輸贏</h3>
+            <button onclick="openPlayerModal()" class="text-label-lg text-primary flex items-center gap-xs bg-primary/10 px-4 py-2 rounded-full hover:bg-primary/20 transition-all active:scale-95">
+                <span class="material-symbols-outlined text-[18px]">person_add</span>
+                新增玩家
+            </button>
+        </div>
+        <p class="text-[12px] text-on-surface-variant px-xs -mt-1">如有中途換人，請點擊上方按鈕替換玩家。</p>
+        
+        <div id="playersList" class="grid grid-cols-1 gap-md">
+            <!-- Dynamic Player Cards will be inserted here -->
+        </div>
+    </section>
+
+    <section class="bg-surface-container-highest/50 rounded-2xl p-md border-2 border-dashed border-outline-variant transition-all" id="validationCard">
+        <div class="flex flex-col items-center gap-md text-center">
+            <div class="flex items-center gap-xs">
+                <span id="validationIcon" class="material-symbols-outlined text-primary">check_circle</span>
+                <span class="font-bold text-[20px] text-primary" id="validationStatus">數據平衡</span>
+            </div>
+            <div class="flex flex-col items-center gap-xs w-full">
+                <div class="flex items-center justify-between w-full max-w-[300px] text-headline-sm px-4">
+                    <span class="text-on-surface-variant">結算差額</span>
+                    <span id="balanceDisplay" class="font-bold text-primary">±$0</span>
+                </div>
+                
+                <div class="mt-4 p-3 bg-white/50 rounded-xl w-full text-left space-y-1">
+                    <div class="flex justify-between text-label-lg text-on-surface-variant">
+                        <span>玩家總和:</span>
+                        <span id="totalPlayerScore" class="font-bold">$0</span>
+                    </div>
+                    <div class="flex justify-between text-label-lg text-on-surface-variant">
+                        <span>應計扣除 (將數×東):</span>
+                        <span id="totalDeduction" class="font-bold">-$200</span>
+                    </div>
+                    <div class="h-[1px] bg-outline-variant my-1"></div>
+                    <div class="flex justify-between text-headline-sm">
+                        <span class="text-[14px] text-on-surface-variant font-bold">最終結餘:</span>
+                        <span id="finalResult" class="font-bold text-primary">$0</span>
+                    </div>
+                </div>
+                <p class="text-[10px] text-outline/70 mt-2">※ 數據隨輸入即時更新，綠色表示帳目平衡</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] z-50 bg-white/80 backdrop-blur-md px-container-padding pb-lg pt-md">
+    <button onclick="saveRecord()" class="w-full bg-primary text-on-primary py-4 rounded-full font-bold text-[18px] flex items-center justify-center gap-sm bouncy-shadow">
+        <span class="material-symbols-outlined">save</span>
+        確認登記
+    </button>
+</div>
+
+<div id="playerModal" class="fixed inset-0 z-[60] flex items-center justify-center p-container-padding hidden">
+    <div class="modal-overlay absolute inset-0" onclick="closePlayerModal()"></div>
+    <div class="bg-white w-full max-w-[400px] rounded-2xl p-6 relative z-10 shadow-xl scale-95 transition-transform">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-bold text-primary">選擇玩家</h2>
+            <button onclick="closePlayerModal()" class="material-symbols-outlined p-2 hover:bg-surface-container rounded-full">close</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3 mb-6" id="availablePlayersList">
+            <!-- Player buttons will be generated here -->
+        </div>
+        <div class="flex gap-2">
+            <input id="customPlayerName" type="text" placeholder="手輸新名..." class="flex-1 bg-surface-container-low border-none rounded-xl px-4 focus:ring-2 focus:ring-primary"/>
+            <button onclick="addCustomPlayer()" class="bg-primary text-white p-3 rounded-xl hover:opacity-90 active:scale-95">
+                <span class="material-symbols-outlined">person_add</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let players = [
+        { id: 1, name: '王小明', score: 0, isWin: true, rounds: null },
+        { id: 2, name: '李小華', score: 0, isWin: false, rounds: null },
+        { id: 3, name: '張大器', score: 0, isWin: false, rounds: null },
+        { id: 4, name: '陳美美', score: 0, isWin: false, rounds: null }
+    ];
+
+    const playerOptions = ['王小明', '李小華', '張大器', '陳美美', '周大福', '林家慶', '趙六', '馬斯克', '黃仁勳', '皮卡丘'];
+
+    window.onload = function() {
+        renderPlayers();
+        calculateResults();
+    }
+
+    function adjustRounds(delta) {
+        const input = document.getElementById('roundsInput');
+        let val = parseInt(input.value) || 0;
+        val = Math.max(1, Math.min(99, val + delta));
+        input.value = val;
+        calculateResults();
+    }
+
+    function renderPlayers() {
+        const container = document.getElementById('playersList');
+        container.innerHTML = '';
+
+        players.forEach(player => {
+            const card = document.createElement('div');
+            const borderColor = player.isWin ? 'border-l-primary' : 'border-l-error';
+            const bgFocus = player.isWin ? 'border-primary-container' : 'border-error-container';
+            
+            card.className = `bg-white rounded-2xl p-md shadow-sm border-l-4 ${borderColor} space-y-md relative group animate-in slide-in-from-bottom-2 duration-300`;
+            card.innerHTML = `
+                <button onclick="removePlayer(${player.id})" class="absolute top-3 right-3 p-1.5 text-outline hover:text-error hover:bg-error-container/20 rounded-full transition-all active:scale-90 opacity-40 group-hover:opacity-100">
+                    <span class="material-symbols-outlined text-[20px]">close</span>
+                </button>
+                <div class="flex items-center justify-between">
+                    <div class="flex flex-col gap-2">
+                        <p class="font-bold text-[20px] text-on-surface">${player.name}</p>
+                        <div class="flex bg-surface-container-low rounded-lg p-1 w-fit">
+                            <button onclick="setPlayerStatus(${player.id}, true)" class="px-3 py-1 text-[12px] font-bold rounded-md transition-all ${player.isWin ? 'bg-primary text-white shadow-sm' : 'text-on-surface-variant hover:bg-white/50'}">贏</button>
+                            <button onclick="setPlayerStatus(${player.id}, false)" class="px-3 py-1 text-[12px] font-bold rounded-md transition-all ${!player.isWin ? 'bg-error text-white shadow-sm' : 'text-on-surface-variant hover:bg-white/50'}">輸</button>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end gap-xs">
+                        <div class="flex items-center gap-xs">
+                            <span class="text-[20px] ${player.isWin ? 'text-primary' : 'text-error'} font-bold">${player.isWin ? '+' : '-'}</span>
+                            <input class="w-24 text-right bg-surface-container-low border-2 ${bgFocus} rounded-xl px-3 py-2 text-[20px] font-bold focus:ring-0 transition-all" 
+                                   placeholder="金額" 
+                                   type="number" 
+                                   value="${Math.abs(player.score)}"
+                                   oninput="updatePlayerScore(${player.id}, this.value)"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-xs border-t border-surface-container-low">
+                    <div class="flex items-center gap-sm">
+                        <span class="text-label-lg text-on-surface-variant">個人打幾將：</span>
+                        <input class="flex-1 bg-surface-container-lowest border border-surface-container rounded-lg px-sm py-xs text-label-lg focus:ring-primary focus:border-primary" 
+                               placeholder="預設與上方一致" 
+                               type="number" 
+                               value="${player.rounds || ''}"
+                               oninput="updatePlayerRounds(${player.id}, this.value)"/>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        calculateResults();
+    }
+
+    function setPlayerStatus(id, isWin) {
+        const player = players.find(p => p.id === id);
+        if (player) {
+            player.isWin = isWin;
+            renderPlayers();
+        }
+    }
+
+    function updatePlayerScore(id, val) {
+        const player = players.find(p => p.id === id);
+        if (player) player.score = Math.abs(parseInt(val)) || 0;
+        calculateResults();
+    }
+
+    function updatePlayerRounds(id, val) {
+        const player = players.find(p => p.id === id);
+        if (player) player.rounds = val ? parseInt(val) : null;
+        calculateResults();
+    }
+
+    function removePlayer(id) {
+        players = players.filter(p => p.id !== id);
+        renderPlayers();
+    }
+
+    function openPlayerModal() {
+        const modal = document.getElementById('playerModal');
+        const list = document.getElementById('availablePlayersList');
+        modal.classList.remove('hidden');
+        
+        list.innerHTML = '';
+        playerOptions.forEach(name => {
+            if (!players.find(p => p.name === name)) {
+                const btn = document.createElement('button');
+                btn.className = "bg-surface-container-high px-4 py-3 rounded-xl font-bold hover:bg-primary/10 hover:text-primary transition-colors text-sm";
+                btn.innerText = name;
+                btn.onclick = () => { addPlayer(name); closePlayerModal(); };
+                list.appendChild(btn);
+            }
+        });
+    }
+
+    function closePlayerModal() {
+        document.getElementById('playerModal').classList.add('hidden');
+    }
+
+    function addPlayer(name) {
+        const newId = players.length > 0 ? Math.max(...players.map(p => p.id)) + 1 : 1;
+        players.push({ id: newId, name: name, score: 0, isWin: true, rounds: null });
+        renderPlayers();
+    }
+
+    function addCustomPlayer() {
+        const nameInput = document.getElementById('customPlayerName');
+        if (nameInput.value.trim()) {
+            addPlayer(nameInput.value.trim());
+            nameInput.value = '';
+            closePlayerModal();
+        }
+    }
+
+    function calculateResults() {
+        const rounds = parseInt(document.getElementById('roundsInput').value) || 1;
+        const east = parseInt(document.getElementById('eastPrice').value) || 0;
+        
+        let totalScore = 0;
+        let totalDeduction = 0;
+
+        players.forEach(p => {
+            // Apply sign based on isWin
+            const actualScore = p.isWin ? p.score : -p.score;
+            totalScore += actualScore;
+            
+            const pRounds = p.rounds !== null ? p.rounds : rounds;
+            totalDeduction += (pRounds * east);
+        });
+
+        const diff = totalScore - totalDeduction;
+
+        document.getElementById('totalPlayerScore').innerText = (totalScore >= 0 ? '+' : '') + `$${totalScore}`;
+        document.getElementById('totalDeduction').innerText = `-$${totalDeduction}`;
+        document.getElementById('balanceDisplay').innerText = (diff >= 0 ? '+' : '') + `$${diff}`;
+        document.getElementById('finalResult').innerText = `$${diff}`;
+
+        const validationCard = document.getElementById('validationCard');
+        const validationStatus = document.getElementById('validationStatus');
+        const validationIcon = document.getElementById('validationIcon');
+        const balanceDisplay = document.getElementById('balanceDisplay');
+        const finalResult = document.getElementById('finalResult');
+
+        if (diff === 0) {
+            validationCard.classList.remove('border-error', 'bg-error-container/20');
+            validationCard.classList.add('border-outline-variant', 'bg-surface-container-highest/50');
+            validationStatus.innerText = "數據平衡";
+            validationStatus.className = "font-bold text-[20px] text-primary";
+            validationIcon.innerText = "check_circle";
+            validationIcon.className = "material-symbols-outlined text-primary";
+            balanceDisplay.className = "font-bold text-primary";
+            finalResult.className = "font-bold text-primary";
+        } else {
+            validationCard.classList.remove('border-outline-variant', 'bg-surface-container-highest/50');
+            validationCard.classList.add('border-error', 'bg-error-container/20');
+            validationStatus.innerText = "數據不平";
+            validationStatus.className = "font-bold text-[20px] text-error";
+            validationIcon.innerText = "error";
+            validationIcon.className = "material-symbols-outlined text-error";
+            balanceDisplay.className = "font-bold text-error";
+            finalResult.className = "font-bold text-error";
+        }
+    }
+
+    function saveRecord() {
+        const rounds = parseInt(document.getElementById('roundsInput').value) || 1;
+        const east = parseInt(document.getElementById('eastPrice').value) || 0;
+        let totalScore = 0;
+        let totalDeduction = 0;
+        players.forEach(p => {
+            totalScore += (p.isWin ? p.score : -p.score);
+            totalDeduction += ((p.rounds !== null ? p.rounds : rounds) * east);
+        });
+
+        const diff = totalScore - totalDeduction;
+
+        if (diff !== 0) {
+            // Using a simple styled overlay message since we can't use alert
+            const msg = document.createElement('div');
+            msg.className = "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-inverse-surface text-inverse-on-surface px-6 py-4 rounded-xl z-[100] shadow-2xl text-center";
+            msg.innerHTML = `<p class="font-bold">帳目不平 (差額 $${diff})</p><p class="text-sm opacity-80">請檢查金額或輸贏狀態</p>`;
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 3000);
+            return;
+        }
+
+        const btn = event.currentTarget;
+        btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> 儲存並跳轉中...';
+        btn.disabled = true;
+
+        // Simulate saving and redirect back to "Home" (index.html)
+        setTimeout(() => {
+            btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> 登記成功';
+            btn.classList.replace('bg-primary', 'bg-green-600');
+            
+            setTimeout(() => {
+                // In a real app, this would be window.location.href = 'index.html';
+                // Here we simulate the action by showing a return message
+                const overlay = document.createElement('div');
+                overlay.className = "fixed inset-0 bg-primary flex flex-col items-center justify-center z-[200] text-white animate-in fade-in duration-500";
+                overlay.innerHTML = `
+                    <span class="material-symbols-outlined text-[80px] mb-4">home</span>
+                    <h2 class="text-2xl font-bold">正返回首頁...</h2>
+                `;
+                document.body.appendChild(overlay);
+                
+                // Final "redirect" simulated
+                setTimeout(() => {
+                    location.reload(); // Refresh as a placeholder for navigation
+                }, 1500);
+            }, 800);
+        }, 1200);
+    }
+</script>
+
+<!-- Decoration Elements -->
+<div class="fixed top-24 -right-8 opacity-10 pointer-events-none transform rotate-12 select-none">
+    <div class="bg-white p-base rounded-lg shadow-md border-2 border-primary-container">
+        <span class="text-[64px] text-primary">🀄</span>
+    </div>
+</div>
+<div class="fixed bottom-40 -left-8 opacity-10 pointer-events-none transform -rotate-12 select-none">
+    <div class="bg-white p-base rounded-lg shadow-md border-2 border-primary-container">
+        <span class="text-[64px] text-primary">🀅</span>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>新增三界公文 - 雀友記</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Quicksand', 'Noto Sans TC', sans-serif;
+            background-color: #fff8f3;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bubbly-shadow {
+            box-shadow: 0 4px 20px rgba(93, 87, 79, 0.08);
+        }
+        .bubbly-button-press:active {
+            transform: translateY(2px);
+            opacity: 0.9;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4eeb3;
+            border-radius: 10px;
+        }
+        /* 隱藏原生檔案輸入 */
+        #imageInput {
+            display: none;
+        }
+        /* 淡入動畫 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#fff8f3",
+                      "inverse-on-surface": "#f9efe4",
+                      "on-background": "#1f1b15",
+                      "inverse-primary": "#a8d298",
+                      "on-secondary-fixed": "#370e08",
+                      "on-tertiary-fixed-variant": "#4a4739",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#1f1b15",
+                      "surface-dim": "#e2d9ce",
+                      "on-tertiary-container": "#4b473a",
+                      "primary-fixed-dim": "#a8d298",
+                      "primary-fixed": "#c4eeb3",
+                      "on-surface-variant": "#43493f",
+                      "on-primary-container": "#2c4f23",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#ffdad4",
+                      "outline-variant": "#c3c8bc",
+                      "surface-container-highest": "#eae1d6",
+                      "on-tertiary-fixed": "#1e1c10",
+                      "inverse-surface": "#343029",
+                      "tertiary-fixed": "#e9e2d0",
+                      "background": "#fff8f3",
+                      "primary": "#436738",
+                      "tertiary-container": "#bcb6a4",
+                      "on-secondary-container": "#794139",
+                      "surface-tint": "#436738",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#f0e7dc",
+                      "outline": "#73796e",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed-dim": "#ffb4a8",
+                      "on-primary-fixed": "#012200",
+                      "tertiary": "#625e50",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed-variant": "#6d3830",
+                      "secondary-container": "#fdb1a5",
+                      "tertiary-fixed-dim": "#ccc6b4",
+                      "surface-container": "#f6ece2",
+                      "surface-variant": "#eae1d6",
+                      "primary-container": "#98c189",
+                      "secondary": "#894e45",
+                      "error": "#ba1a1a",
+                      "surface-container-low": "#fcf2e7",
+                      "surface": "#fff8f3",
+                      "on-primary-fixed-variant": "#2c4f23"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "container-padding": "24px",
+                      "sm": "12px",
+                      "md": "20px",
+                      "lg": "32px",
+                      "xs": "4px",
+                      "xl": "48px"
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface selection:bg-primary-container selection:text-on-primary-container">
+
+<div id="toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-[100] hidden">
+    <div class="bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-full shadow-2xl flex items-center gap-sm animate-fade-in">
+        <span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+        <span id="toastMessage" class="font-bold">操作成功</span>
+    </div>
+</div>
+
+<header class="bg-surface dark:bg-surface-dim sticky top-0 z-50">
+    <div class="flex justify-between items-center w-full px-container-padding py-md max-w-[600px] mx-auto">
+        <div class="flex items-center gap-base">
+            <button class="flex items-center justify-center p-xs rounded-full hover:bg-surface-container-high transition-colors bubbly-button-press">
+                <span class="material-symbols-outlined text-primary">arrow_back</span>
+            </button>
+            <h1 class="text-2xl font-bold text-primary dark:text-primary-fixed-dim">新增三界公文</h1>
+        </div>
+        <!-- 已刪除右上角鈴鐺與設定圖示 -->
+    </div>
+</header>
+
+<main class="max-w-[600px] mx-auto px-container-padding pb-xl pt-md flex flex-col gap-lg">
+    
+    <section class="flex flex-col gap-md">
+        <div class="flex flex-col gap-xs">
+            <label class="text-sm font-semibold text-on-surface-variant ml-xs">公告標題</label>
+            <input id="announcementTitle" class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md focus:border-primary focus:ring-0 transition-all placeholder:text-outline-variant outline-none" placeholder="輸入引人入勝的標題..." type="text"/>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-md">
+            <div class="flex flex-col gap-xs">
+                <label class="text-sm font-semibold text-on-surface-variant ml-xs">公告類別</label>
+                <select class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg px-md py-md focus:border-primary focus:ring-0 appearance-none outline-none">
+                    <option>仙女規則</option>
+                    <option>系統通知</option>
+                    <option>活動訊息</option>
+                    <option>相關資訊</option>
+                    <option>其他</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-xs">
+                <label class="text-sm font-semibold text-on-surface-variant ml-xs">發布時間</label>
+                <input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg px-md py-md focus:border-primary focus:ring-0 outline-none" type="datetime-local"/>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-xs">
+            <label class="text-sm font-semibold text-on-surface-variant ml-xs">發佈者 <span class="text-outline-variant font-normal">(選填)</span></label>
+            <input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md focus:border-primary focus:ring-0 transition-all placeholder:text-outline-variant outline-none" placeholder="輸入發佈者名稱..." type="text"/>
+        </div>
+
+        <div class="flex flex-col gap-xs">
+            <label class="text-sm font-semibold text-on-surface-variant ml-xs">公告內容 <span class="text-outline-variant font-normal">(選填)</span></label>
+            <textarea class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md focus:border-primary focus:ring-0 transition-all placeholder:text-outline-variant outline-none resize-none" placeholder="撰寫詳細的公告內容... (若不填寫，發布後將隱藏此區塊)" rows="5"></textarea>
+        </div>
+    </section>
+
+    <section class="flex flex-col gap-md">
+        <div class="flex items-center gap-xs ml-xs">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">image</span>
+            <h2 class="text-xl font-bold text-on-surface">上傳封面圖片 <span class="text-outline-variant font-normal text-sm">(選填)</span></h2>
+        </div>
+        
+        <input type="file" id="imageInput" accept="image/*">
+        <div id="dropZone" onclick="document.getElementById('imageInput').click()" class="w-full border-2 border-dashed border-primary-container rounded-lg bg-surface-container-low p-xl flex flex-col items-center justify-center gap-md group hover:bg-surface-container-high transition-all cursor-pointer overflow-hidden relative min-h-[200px]">
+            <div id="uploadPlaceholder" class="flex flex-col items-center gap-md">
+                <div class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container group-hover:scale-110 transition-transform">
+                    <span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+                </div>
+                <div class="text-center">
+                    <p class="font-semibold text-on-surface">點擊或拖放圖片至此</p>
+                    <p class="text-xs text-on-surface-variant">建議尺寸 1200 x 630px (PNG, JPG)</p>
+                </div>
+            </div>
+            <img id="imagePreview" src="" class="absolute inset-0 w-full h-full object-cover hidden">
+            <div id="imageOverlay" class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity hidden">
+                <span class="text-white font-bold flex items-center gap-2 bg-primary/80 px-4 py-2 rounded-full">
+                    <span class="material-symbols-outlined">refresh</span> 更換圖片
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-surface-container rounded-xl p-lg bubbly-shadow flex flex-col gap-lg border-2 border-primary-container/20">
+        <div class="flex items-center gap-xs">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">celebration</span>
+            <h2 class="text-xl font-bold text-on-surface">活動詳情 <span class="text-outline-variant font-normal text-sm">(選填)</span></h2>
+        </div>
+        
+        <div class="flex flex-col gap-md">
+            <div class="flex flex-col gap-xs">
+                <label class="text-sm font-semibold text-on-surface-variant">活動時間</label>
+                <input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md focus:border-primary focus:ring-0 outline-none" placeholder="例如：本週六 14:00 - 18:00" type="text"/>
+            </div>
+            
+            <div class="flex flex-col gap-xs">
+                <label class="text-sm font-semibold text-on-surface-variant">活動獎勵</label>
+                <input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md focus:border-primary focus:ring-0 outline-none" placeholder="例如：優勝者可獲得 100 點積分" type="text"/>
+            </div>
+
+            <div class="flex flex-col gap-xs">
+                <div class="flex justify-between items-center">
+                    <label class="text-sm font-semibold text-on-surface-variant">活動規則</label>
+                    <button onclick="addRuleRow()" class="flex items-center gap-xs text-primary font-bold text-sm bubbly-button-press">
+                        <span class="material-symbols-outlined text-[18px]">add_circle</span> 新增項次
+                    </button>
+                </div>
+                <div id="rulesList" class="flex flex-col gap-sm mt-xs">
+                    <div class="flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20 animate-fade-in">
+                        <span class="material-symbols-outlined text-primary text-sm">circle</span>
+                        <input class="flex-1 border-none bg-transparent p-0 focus:ring-0 text-on-surface text-sm" type="text" value="參賽者需具備社團初級以上資格"/>
+                        <span onclick="removeRow(this)" class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">close</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-surface-container-low rounded-xl p-md border-2 border-primary-container/20 flex flex-col gap-md mb-md">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-sm">
+                <span class="material-symbols-outlined text-primary">how_to_reg</span>
+                <span class="font-bold text-on-surface">開放報名</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input class="sr-only peer" type="checkbox" checked onchange="toggleRegistration(this)">
+                <div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            </label>
+        </div>
+
+        <div id="registrationDetails" class="flex flex-col gap-md border-t border-primary-container/10 pt-md">
+            <div class="flex flex-col gap-xs">
+                <div class="flex justify-between items-center">
+                    <label class="text-sm font-semibold text-on-surface-variant">報名選項設定</label>
+                    <button onclick="addOptionRow()" class="flex items-center gap-xs text-primary font-bold text-sm bubbly-button-press">
+                        <span class="material-symbols-outlined text-[18px]">add_circle</span> 新增項目
+                    </button>
+                </div>
+                <p class="text-xs text-outline-variant">例如：東風戰、半莊戰、是否共乘等。</p>
+                <div id="optionsList" class="flex flex-col gap-sm mt-xs">
+                    <div class="flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20 animate-fade-in">
+                        <span class="material-symbols-outlined text-primary text-sm">check_box</span>
+                        <input class="flex-1 border-none bg-transparent p-0 focus:ring-0 text-on-surface text-sm" type="text" value="東風戰"/>
+                        <span onclick="removeRow(this)" class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">close</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-xs border-t border-primary-container/10 bg-primary-container/5 p-sm rounded-lg">
+                <div class="flex items-center gap-sm">
+                    <span class="material-symbols-outlined text-primary">notes</span>
+                    <span class="font-bold text-on-surface">開放仙友填寫備註</span>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input class="sr-only peer" type="checkbox">
+                    <div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+            </div>
+
+            <div class="flex flex-col gap-xs">
+                <label class="text-sm font-semibold text-on-surface-variant ml-xs">報名截止日期</label>
+                <input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg px-md py-md focus:border-primary focus:ring-0 outline-none" type="datetime-local"/>
+            </div>
+        </div>
+    </section>
+
+    <section class="grid grid-cols-2 gap-md mt-md">
+        <button onclick="handleAction('save')" class="bg-surface-container-high text-on-surface-variant font-bold py-md rounded-full bubbly-button-press transition-all hover:bg-surface-variant border-2 border-transparent">
+            儲存草稿
+        </button>
+        <button onclick="handleAction('publish')" class="bg-primary text-on-primary font-bold py-md rounded-full shadow-lg bubbly-button-press transition-all hover:brightness-110 flex items-center justify-center gap-sm">
+            <span class="material-symbols-outlined">send</span> 發布公告
+        </button>
+    </section>
+
+    <div class="flex justify-center items-center gap-md mt-xl py-lg border-t-2 border-primary-container/10">
+        <div class="w-12 h-12 bg-primary-container/20 rounded-full flex items-center justify-center">
+            <img alt="Mahjong Tile" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd3t5x49bnHYT4LvTF8tRioS6ZIwPCaVI9iTXEa3ALuQ81Hii_apPiATkzqFGj6L9Ys-pf3HEmA0UFiH2dsfeiX1gjymq4xEsPzjV4gdD-HbetGfu1NQfBd8zmoX9Dvtg0C3xLeXUQu2RNJcQTU_y2xCxoad3Ay3_eeP9GgvvhnV4hdpcZzWkPHhMfl7ytJFfJIEGaoUExYxyg8FWfOF9oJAiIuDvKeNQQ7axb2AJe7y8Bu8TIbI0Cw0L0wyIKCefrkdJAuuMPsYE"/>
+        </div>
+        <p class="text-sm text-on-surface-variant italic">「每一張公告都是社團的新篇章！」</p>
+    </div>
+</main>
+
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] z-50 flex justify-around items-center px-base pb-safe pt-xs bg-surface-container-high shadow-[0_-4px_20px_rgba(93,87,79,0.08)] rounded-t-xl">
+    <a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs hover:bg-surface-variant/50 transition-colors" href="#">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-xs font-bold">大廳</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs hover:bg-surface-variant/50 transition-colors" href="#">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="text-xs font-bold">統計</span>
+    </a>
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-lg py-xs" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">edit_note</span>
+        <span class="text-xs font-bold">公告</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs hover:bg-surface-variant/50 transition-colors" href="#">
+        <span class="material-symbols-outlined">emoji_events</span>
+        <span class="text-xs font-bold">排行</span>
+    </a>
+</nav>
+
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+    const imageOverlay = document.getElementById('imageOverlay');
+
+    imageInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                imagePreview.src = event.target.result;
+                imagePreview.classList.remove('hidden');
+                uploadPlaceholder.classList.add('hidden');
+                imageOverlay.classList.remove('hidden');
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function addRuleRow() {
+        const list = document.getElementById('rulesList');
+        const div = document.createElement('div');
+        div.className = "flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20 animate-fade-in";
+        div.innerHTML = `
+            <span class="material-symbols-outlined text-primary text-sm">circle</span>
+            <input class="flex-1 border-none bg-transparent p-0 focus:ring-0 text-on-surface text-sm" placeholder="請輸入規則..." type="text"/>
+            <span onclick="removeRow(this)" class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">close</span>
+        `;
+        list.appendChild(div);
+    }
+
+    function addOptionRow() {
+        const list = document.getElementById('optionsList');
+        const div = document.createElement('div');
+        div.className = "flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20 animate-fade-in";
+        div.innerHTML = `
+            <span class="material-symbols-outlined text-primary text-sm">check_box</span>
+            <input class="flex-1 border-none bg-transparent p-0 focus:ring-0 text-on-surface text-sm" placeholder="請輸入選項..." type="text"/>
+            <span onclick="removeRow(this)" class="material-symbols-outlined text-outline cursor-pointer hover:text-error transition-colors">close</span>
+        `;
+        list.appendChild(div);
+    }
+
+    function removeRow(element) {
+        const row = element.closest('div');
+        row.style.opacity = '0';
+        row.style.transform = 'translateY(-10px)';
+        setTimeout(() => {
+            row.remove();
+        }, 300);
+    }
+
+    function toggleRegistration(checkbox) {
+        const details = document.getElementById('registrationDetails');
+        if (checkbox.checked) {
+            details.classList.remove('hidden');
+            details.classList.add('animate-fade-in');
+        } else {
+            details.classList.add('hidden');
+        }
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toastMessage');
+        toastMsg.innerText = message;
+        toast.classList.remove('hidden');
+        
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 3000);
+    }
+
+    function handleAction(type) {
+        const title = document.getElementById('announcementTitle').value;
+        
+        if (type === 'publish') {
+            if (!title) {
+                showToast('請至少輸入公告標題！');
+                return;
+            }
+            showToast('🎉 公告已成功發布至三界！');
+        } else {
+            showToast('📁 已將內容存入草稿箱');
+        }
+        
+        // 模擬後續動作，例如導回列表
+        console.log(`Action: ${type}, Title: ${title}`);
+    }
+
+    // 處理拖放圖片
+    const dropZone = document.getElementById('dropZone');
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('bg-primary-container/20');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('bg-primary-container/20');
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('bg-primary-container/20');
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+            imageInput.files = e.dataTransfer.files;
+            const event = new Event('change');
+            imageInput.dispatchEvent(event);
+        }
+    });
+</script>
+
+</body>
+</html>

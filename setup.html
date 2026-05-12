@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>小仙女集合中心 - 管理員控制中心</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fff8f3",
+                        "on-primary-fixed": "#012200",
+                        "primary-container": "#98c189",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-bright": "#fff8f3",
+                        "primary-fixed-dim": "#a8d298",
+                        "surface-container-highest": "#eae1d6",
+                        "inverse-primary": "#a8d298",
+                        "surface-dim": "#e2d9ce",
+                        "inverse-on-surface": "#f9efe4",
+                        "surface-tint": "#436738",
+                        "on-primary-container": "#2c4f23",
+                        "background": "#fff8f3",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#fcf2e7",
+                        "on-tertiary-fixed-variant": "#4a4739",
+                        "on-tertiary-fixed": "#1e1c10",
+                        "on-background": "#1f1b15",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#bcb6a4",
+                        "surface-variant": "#eae1d6",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#343029",
+                        "on-secondary-fixed": "#370e08",
+                        "on-primary-fixed-variant": "#2c4f23",
+                        "tertiary-fixed": "#e9e2d0",
+                        "primary-fixed": "#c4eeb3",
+                        "secondary-container": "#fdb1a5",
+                        "on-surface-variant": "#43493f",
+                        "on-surface": "#1f1b15",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#4b473a",
+                        "primary": "#436738",
+                        "secondary-fixed-dim": "#ffb4a8",
+                        "secondary-fixed": "#ffdad4",
+                        "outline": "#73796e",
+                        "tertiary-fixed-dim": "#ccc6b4",
+                        "secondary": "#894e45",
+                        "on-secondary-fixed-variant": "#6d3830",
+                        "on-secondary-container": "#794139",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f6ece2",
+                        "outline-variant": "#c3c8bc",
+                        "surface-container-high": "#f0e7dc",
+                        "tertiary": "#625e50"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "xl": "48px",
+                        "lg": "32px",
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "md": "20px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Quicksand"],
+                        "headline-md": ["Quicksand"],
+                        "label-lg": ["Quicksand"],
+                        "headline-sm": ["Quicksand"],
+                        "headline-lg-mobile": ["Quicksand"],
+                        "body-lg": ["Quicksand"],
+                        "body-md": ["Quicksand"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #fff8f3;
+            font-family: 'Quicksand', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bouncy-card:active {
+            transform: scale(0.98);
+            transition: transform 0.15s ease-out;
+        }
+    </style>
+</head>
+<body class="text-on-background min-h-screen pb-32">
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-container-padding h-16 max-w-[600px] mx-auto bg-surface dark:bg-surface-dim shadow-[0_4px_20px_rgba(93,87,79,0.08)]">
+<div class="flex items-center gap-4">
+<button class="hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">管理控制中心</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="hover:bg-surface-container-high transition-colors duration-200 p-2 rounded-full active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container overflow-hidden">
+<img alt="Admin" class="w-full h-full object-cover" data-alt="A cute profile portrait of a female professional in a bright, airy setting with soft matcha green accents. The lighting is warm and welcoming, reflecting a kawaii minimalism aesthetic. High-quality digital photography with a gentle focus on her friendly expression, set against a cream-colored minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMV_hUyhThMzBaZ_xLIXacQSo_KlFQNn2sUAc3Dl2q7CZIOa5Zl0l215OCfvI7cak0LAiDlhp_Qmu5aTlHistYy7COpYxhhX5UpOmDnxkJOJ93-bYe_X1I1O7ZRxZqocBsOuzQVfAo5O1EarHrgkMfbHslKYdRxxhs41-5Hi8F85IIGPRXSvf3KHhjgXiElQuR-nf8s4v4YHlc9wYQ-Lxqr-HaU7xU7zlY5rIEKZjiF3av41m_qaa4adCk_WeXHqoRj0FTD7wcnQ8"/>
+</div>
+</div>
+</header>
+<main class="mt-20 px-container-padding max-w-[600px] mx-auto">
+<section class="mb-lg pt-4">
+<div class="bg-primary-container/10 border-l-4 border-primary rounded-r-lg p-md mb-md">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-1">管理員您好</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">請選擇要維護的項目，保持仙境運行順暢。</p>
+</div>
+</section>
+<section class="grid grid-cols-1 gap-md mb-xl">
+<div class="bouncy-card bg-surface-container-lowest border border-outline-variant p-md rounded-lg shadow-[0_4px_20px_rgba(93,87,79,0.08)] flex items-center gap-md hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-xl bg-primary-container flex items-center justify-center text-on-primary-container shrink-0">
+<span class="material-symbols-outlined text-4xl" data-icon="description">description</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">三界公文管理</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">新增、編輯或刪除公告與規則</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="bouncy-card bg-surface-container-lowest border border-outline-variant p-md rounded-lg shadow-[0_4px_20px_rgba(93,87,79,0.08)] flex items-center gap-md hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-xl bg-secondary-container flex items-center justify-center text-on-secondary-container shrink-0">
+<span class="material-symbols-outlined text-4xl" data-icon="leaderboard">leaderboard</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">風雲榜設定</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">更新獎項、得獎人與獲獎日期</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="bouncy-card bg-surface-container-lowest border border-outline-variant p-md rounded-lg shadow-[0_4px_20px_rgba(93,87,79,0.08)] flex items-center gap-md hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-xl bg-tertiary-container flex items-center justify-center text-on-tertiary-container shrink-0">
+<span class="material-symbols-outlined text-4xl" data-icon="badge">badge</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">仙班名冊維護</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">新增、編輯或移除仙友資訊</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="bouncy-card bg-surface-container-lowest border border-outline-variant p-md rounded-lg shadow-[0_4px_20px_rgba(93,87,79,0.08)] flex items-center gap-md hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-xl bg-outline-variant flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined text-4xl" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">安全與密碼</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">修改管理員登入密碼</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="bouncy-card bg-surface-container-lowest border border-outline-variant p-md rounded-lg shadow-[0_4px_20px_rgba(93,87,79,0.08)] flex items-center gap-md hover:bg-surface-container-low transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-xl bg-tertiary-fixed-dim flex items-center justify-center text-on-tertiary-fixed-variant shrink-0">
+<span class="material-symbols-outlined text-4xl" data-icon="checklist">checklist</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">特殊紀錄規則管理</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">管理仙緣與渡劫項目規則</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe pt-xs max-w-[600px] left-1/2 -translate-x-1/2 bg-surface-container-high shadow-[0_-4px_20px_rgba(93,87,79,0.08)] rounded-t-xl">
+
+    <!-- 大廳 -->
+    <a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-md py-xs transition-all active:scale-90 min-w-[80px]"
+       href="index.html">
+      <span class="material-symbols-outlined" data-weight="fill">home</span>
+      <span class="font-label-lg">大廳</span>
+    </a>
+    
+    <!-- 登記紀錄（保留你的 Stitch 動態頁） -->
+    <a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs hover:bg-surface-variant/50 transition-all active:scale-90 min-w-[80px]"
+       href="keyin.html">
+      <span class="material-symbols-outlined">add_circle</span>
+      <span class="font-label-lg">登記紀錄</span>
+    </a>
+    
+    <!-- 個人數據 -->
+    <a class="flex flex-col items-center justify-center text-on-surface-variant px-md py-xs hover:bg-surface-variant/50 transition-all active:scale-90 min-w-[80px]"
+       href="promate.html">
+      <span class="material-symbols-outlined">analytics</span>
+      <span class="font-label-lg">個人數據</span>
+    </a>
+    
+    </nav>
+    
+    </nav>
+</nav>
+</body></html>

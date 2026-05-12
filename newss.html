@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>新增三界公文 - 雀友記</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff8f3;
+        }
+        .bubbly-shadow {
+            box-shadow: 0 4px 20px rgba(93, 87, 79, 0.08);
+        }
+        .bubbly-button-press:active {
+            transform: translateY(2px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-bright": "#fff8f3",
+                      "inverse-on-surface": "#f9efe4",
+                      "on-background": "#1f1b15",
+                      "inverse-primary": "#a8d298",
+                      "on-secondary-fixed": "#370e08",
+                      "on-tertiary-fixed-variant": "#4a4739",
+                      "on-primary": "#ffffff",
+                      "on-surface": "#1f1b15",
+                      "surface-dim": "#e2d9ce",
+                      "on-tertiary-container": "#4b473a",
+                      "primary-fixed-dim": "#a8d298",
+                      "primary-fixed": "#c4eeb3",
+                      "on-surface-variant": "#43493f",
+                      "on-primary-container": "#2c4f23",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#ffdad4",
+                      "outline-variant": "#c3c8bc",
+                      "surface-container-highest": "#eae1d6",
+                      "on-tertiary-fixed": "#1e1c10",
+                      "inverse-surface": "#343029",
+                      "tertiary-fixed": "#e9e2d0",
+                      "background": "#fff8f3",
+                      "primary": "#436738",
+                      "tertiary-container": "#bcb6a4",
+                      "on-secondary-container": "#794139",
+                      "surface-tint": "#436738",
+                      "on-tertiary": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#f0e7dc",
+                      "outline": "#73796e",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed-dim": "#ffb4a8",
+                      "on-primary-fixed": "#012200",
+                      "tertiary": "#625e50",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed-variant": "#6d3830",
+                      "secondary-container": "#fdb1a5",
+                      "tertiary-fixed-dim": "#ccc6b4",
+                      "surface-container": "#f6ece2",
+                      "surface-variant": "#eae1d6",
+                      "primary-container": "#98c189",
+                      "secondary": "#894e45",
+                      "error": "#ba1a1a",
+                      "surface-container-low": "#fcf2e7",
+                      "surface": "#fff8f3",
+                      "on-primary-fixed-variant": "#2c4f23"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "container-padding": "24px",
+                      "sm": "12px",
+                      "md": "20px",
+                      "lg": "32px",
+                      "xs": "4px",
+                      "xl": "48px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Quicksand"],
+                      "headline-lg": ["Quicksand"],
+                      "body-md": ["Quicksand"],
+                      "body-lg": ["Quicksand"],
+                      "headline-md": ["Quicksand"],
+                      "label-lg": ["Quicksand"],
+                      "headline-sm": ["Quicksand"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                      "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface selection:bg-primary-container selection:text-on-primary-container">
+<header class="bg-surface dark:bg-surface-dim sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-container-padding py-md max-w-[600px] mx-auto">
+<div class="flex items-center gap-base">
+<button class="flex items-center justify-center p-xs rounded-full hover:bg-surface-container-high transition-colors bubbly-button-press">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">新增三界公文</h1>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</div>
+</div>
+</header>
+<main class="max-w-[600px] mx-auto px-container-padding pb-xl pt-md flex flex-col gap-lg">
+<section class="flex flex-col gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-xs">公告標題</label>
+<input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md font-body-md focus:border-primary focus:ring-0 transition-all placeholder:text-outline-variant outline-none" placeholder="輸入引人入勝的標題..." type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-xs">公告類別</label>
+<select class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg px-md py-md font-body-md focus:border-primary focus:ring-0 appearance-none outline-none"><option>仙女規則</option><option>系統通知</option><option>活動訊息</option><option>相關資訊</option><option>其他</option></select>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-xs">發布時間</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg px-md py-md font-body-md focus:border-primary focus:ring-0 outline-none pr-base" type="datetime-local"/>
+</div>
+</div>
+</div><div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-xs">發佈者 <span class="text-outline-variant font-normal">(選填)</span></label>
+<input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md font-body-md focus:border-primary focus:ring-0 transition-all placeholder:text-outline-variant outline-none" placeholder="輸入發佈者名稱..." type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-xs">公告內容 <span class="text-outline-variant font-normal">(選填)</span></label>
+<textarea class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md font-body-md focus:border-primary focus:ring-0 transition-all placeholder:text-outline-variant outline-none resize-none" placeholder="撰寫詳細的公告內容... (若不填寫，發布後將隱藏此區塊)" rows="6"></textarea>
+</div>
+</section>
+<section class="flex flex-col gap-md">
+<div class="flex items-center gap-xs ml-xs">
+<span class="material-symbols-outlined text-primary" data-weight="fill">image</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">上傳封面圖片 <span class="text-outline-variant font-normal text-body-md">(選填)</span></h2>
+</div>
+<div class="w-full border-2 border-dashed border-primary-container rounded-lg bg-surface-container-low p-xl flex flex-col items-center justify-center gap-md group hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="w-xl h-xl bg-primary-container rounded-full flex items-center justify-center text-on-primary-container group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+</div>
+<div class="text-center">
+<p class="font-body-lg text-on-surface font-semibold">點擊或拖放圖片至此</p>
+<p class="font-label-lg text-on-surface-variant">建議尺寸 1200 x 630px (PNG, JPG)</p>
+</div>
+</div>
+</section>
+<section class="bg-surface-container rounded-xl p-lg bubbly-shadow flex flex-col gap-lg border-2 border-primary-container/20">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary" data-weight="fill">celebration</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">活動詳情 <span class="text-outline-variant font-normal text-body-md">(選填)</span></h2>
+</div>
+<div class="flex flex-col gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant">活動時間 <span class="text-outline-variant font-normal">(選填)</span></label>
+<input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md font-body-md focus:border-primary focus:ring-0 outline-none" placeholder="例如：本週六 14:00 - 18:00 (可選填)" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant">活動獎勵 <span class="text-outline-variant font-normal">(選填)</span></label>
+<input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg p-md font-body-md focus:border-primary focus:ring-0 outline-none" placeholder="例如：優勝者可獲得 100 點積分 (可選填)" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-lg text-label-lg text-on-surface-variant">活動規則 <span class="text-outline-variant font-normal">(選填)</span></label>
+<button class="flex items-center gap-xs text-primary font-label-lg bubbly-button-press">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                            新增項次
+                        </button>
+</div>
+<div class="flex flex-col gap-sm mt-xs">
+<div class="flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20">
+<span class="material-symbols-outlined text-primary text-sm">circle</span>
+<input class="flex-1 border-none bg-transparent p-0 font-body-md focus:ring-0 text-on-surface" type="text" value="參賽者需具備社團初級以上資格"/>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-error">close</span>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20">
+<span class="material-symbols-outlined text-primary text-sm">circle</span>
+<input class="flex-1 border-none bg-transparent p-0 font-body-md focus:ring-0 text-on-surface" placeholder="請輸入規則... (若無規則將不顯示)" type="text"/>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-error">close</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-low rounded-xl p-md border-2 border-primary-container/20 flex flex-col gap-md mb-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">how_to_reg</span>
+<span class="font-body-lg text-on-surface font-semibold">開放報名</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex flex-col gap-xs border-t border-primary-container/10">
+<div class="flex justify-between items-center">
+<label class="font-label-lg text-label-lg text-on-surface-variant">報名選項設定 <span class="text-outline-variant font-normal">(選填)</span></label>
+<button class="flex items-center gap-xs text-primary font-label-lg bubbly-button-press">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+                            新增項目
+                        </button>
+</div>
+<p class="text-xs text-outline-variant mt-1">例如：東風戰、半莊戰、是否共乘等，供報名者勾選。</p>
+<div class="flex flex-col gap-sm mt-xs">
+<div class="flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20">
+<span class="material-symbols-outlined text-primary text-sm">check_box</span>
+<input class="flex-1 border-none bg-transparent p-0 font-body-md focus:ring-0 text-on-surface" type="text" value="東風戰"/>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-error">close</span>
+</div>
+<div class="flex items-center gap-sm bg-surface-container-lowest p-sm rounded-lg border border-primary-container/20">
+<span class="material-symbols-outlined text-primary text-sm">check_box</span>
+<input class="flex-1 border-none bg-transparent p-0 font-body-md focus:ring-0 text-on-surface" placeholder="請輸入選項..." type="text"/>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-error">close</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-xs border-t border-primary-container/10 bg-primary-container/5 p-sm rounded-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary">notes</span>
+<span class="font-body-lg text-on-surface font-semibold">開放仙友填寫備註</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div><div class="flex flex-col gap-xs pt-md border-t border-primary-container/10">
+<label class="font-label-lg text-label-lg text-on-surface-variant ml-xs">報名截止日期 <span class="text-outline-variant font-normal">(選填)</span></label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-2 border-primary-container/30 rounded-lg px-md py-md font-body-md focus:border-primary focus:ring-0 outline-none pr-base" type="datetime-local"/>
+</div>
+</div>
+</section><section class="grid grid-cols-2 gap-md mt-md">
+<button class="bg-surface-container-high text-on-surface-variant font-headline-sm py-md rounded-full bubbly-button-press transition-all hover:bg-surface-variant border-2 border-transparent">
+                儲存草稿
+            </button>
+<button class="bg-primary text-on-primary font-headline-sm py-md rounded-full shadow-lg bubbly-button-press transition-all hover:brightness-110 flex items-center justify-center gap-sm"><span class="material-symbols-outlined">send</span> 發布公告</button>
+</section>
+<div class="flex justify-center items-center gap-md mt-xl py-lg border-t-2 border-primary-container/10">
+<div class="w-12 h-12 bg-primary-container/20 rounded-full flex items-center justify-center">
+<img alt="Mahjong Tile" class="w-8 h-8" data-alt="A charming, minimalist 3D illustration of a traditional Mahjong tile decorated with a cute smiley face. The tile is rendered in a soft, matcha-green and cream color palette with smooth, rounded edges and a tactile, clay-like texture. It floats against a warm, pastel-colored background with soft, diffused lighting and gentle ambient shadows, embodying a playful and welcoming social atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd3t5x49bnHYT4LvTF8tRioS6ZIwPCaVI9iTXEa3ALuQ81Hii_apPiATkzqFGj6L9Ys-pf3HEmA0UFiH2dsfeiX1gjymq4xEsPzjV4gdD-HbetGfu1NQfBd8zmoX9Dvtg0C3xLeXUQu2RNJcQTU_y2xCxoad3Ay3_eeP9GgvvhnV4hdpcZzWkPHhMfl7ytJFfJIEGaoUExYxyg8FWfOF9oJAiIuDvKeNQQ7axb2AJe7y8Bu8TIbI0Cw0L0wyIKCefrkdJAuuMPsYE"/>
+</div>
+<p class="font-body-md text-on-surface-variant italic">「每一張公告都是社團的新篇章！」</p>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe pt-xs max-w-[600px] left-1/2 -translate-x-1/2 bg-surface-container-high shadow-[0_-4px_20px_rgba(93,87,79,0.08)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">大廳</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-lg text-label-lg">統計</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-lg py-xs" href="#">
+<span class="material-symbols-outlined" data-weight="fill">edit_note</span>
+<span class="font-label-lg text-label-lg">公告</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs hover:bg-surface-variant/50 transition-colors" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-lg text-label-lg">排行</span>
+</a>
+</nav>
+</body></html>

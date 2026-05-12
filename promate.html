@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #fff8f3;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 20px rgba(93, 87, 79, 0.08);
+        }
+        .pressable:active {
+            transform: translateY(2px);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-fixed": "#c4eeb3",
+                        "tertiary-container": "#bcb6a4",
+                        "surface": "#fff8f3",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#4b473a",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#eae1d6",
+                        "inverse-primary": "#a8d298",
+                        "tertiary": "#625e50",
+                        "surface-dim": "#e2d9ce",
+                        "surface-bright": "#fff8f3",
+                        "surface-tint": "#436738",
+                        "on-tertiary-fixed": "#1e1c10",
+                        "surface-container": "#f6ece2",
+                        "secondary": "#894e45",
+                        "secondary-fixed": "#ffdad4",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#eae1d6",
+                        "secondary-fixed-dim": "#ffb4a8",
+                        "outline-variant": "#c3c8bc",
+                        "outline": "#73796e",
+                        "primary-container": "#98c189",
+                        "surface-container-low": "#fcf2e7",
+                        "on-secondary-container": "#794139",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#2c4f23",
+                        "secondary-container": "#fdb1a5",
+                        "on-background": "#1f1b15",
+                        "tertiary-fixed": "#e9e2d0",
+                        "tertiary-fixed-dim": "#ccc6b4",
+                        "inverse-on-surface": "#f9efe4",
+                        "surface-container-high": "#f0e7dc",
+                        "primary": "#436738",
+                        "background": "#fff8f3",
+                        "on-surface": "#1f1b15",
+                        "on-secondary-fixed-variant": "#6d3830",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#a8d298",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#343029",
+                        "on-primary-fixed": "#012200",
+                        "on-primary-container": "#2c4f23",
+                        "on-secondary-fixed": "#370e08",
+                        "on-tertiary-fixed-variant": "#4a4739",
+                        "on-surface-variant": "#43493f"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "lg": "32px",
+                        "base": "8px",
+                        "container-padding": "24px",
+                        "xl": "48px",
+                        "sm": "12px",
+                        "xs": "4px",
+                        "md": "20px"
+                    },
+                    fontFamily: {
+                        "headline-lg-mobile": ["Quicksand"],
+                        "body-lg": ["Quicksand"],
+                        "label-lg": ["Quicksand"],
+                        "headline-lg": ["Quicksand"],
+                        "body-md": ["Quicksand"],
+                        "headline-md": ["Quicksand"],
+                        "headline-sm": ["Quicksand"]
+                    },
+                    fontSize: {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                        "label-lg": ["14px", {"lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface">
+<div class="fixed top-20 left-1/2 -translate-x-1/2 z-[100] opacity-0 pointer-events-none transition-all duration-300 bg-primary text-white px-6 py-2 rounded-full font-bold shadow-lg flex items-center gap-2" id="check-in-toast">
+<span class="material-symbols-outlined text-[20px]">stars</span> 仙氣值 +2 已領取
+    </div>
+<!-- Top App Bar -->
+<header class="bg-surface sticky top-0 z-40 flex justify-between items-center w-full px-container-padding py-md max-w-[600px] mx-auto">
+<div class="flex items-center gap-sm">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">仙友運簿 - 個人數據</h1>
+</div>
+<div class="flex gap-md items-center">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high p-xs rounded-full transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-high p-xs rounded-full transition-colors">settings</span>
+</div>
+</header><section class="max-w-[600px] mx-auto px-container-padding py-sm">
+<div class="flex items-center gap-sm bg-surface-container-low p-sm rounded-full border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary ml-2">group</span>
+<select class="bg-transparent border-none focus:ring-0 text-body-md font-bold text-on-surface flex-1 appearance-none cursor-pointer">
+<option value="1">王小明 (目前)</option>
+<option value="2">李大華</option>
+<option value="3">陳小雲</option>
+</select>
+<span class="material-symbols-outlined text-on-surface-variant mr-2 pointer-events-none">expand_more</span>
+</div>
+</section>
+<main class="max-w-[600px] mx-auto px-container-padding pb-32">
+<!-- Profile Header & Vitality System -->
+<section class="flex flex-col gap-md py-md">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img alt="User Avatar" class="w-20 h-20 rounded-xl bg-primary-container p-1 border-4 border-white custom-shadow" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3R9TkXHk2yyys8Qey57Ho4rQbgk7qsNQT9EF2X8K8zU96ZxTQDfiDLdMSgbPwIC2VFXJx230KCv4HRxblP7Tjwjmuqv1LUK7tMQ9Cyn63J2N1nUew_bKSUwf8l4ZsXBu1CfDZg2Ht9PMt0f7rz9k5MNuQqw3pfFOB8g3o4yXYnQ0qe1LdIm5LVTmwA_LO6hBEsg-k2mFDyMy0kQP2Lld9dgoqpYJy1DH-zWKacqEQVVAQHS-0znZrfeLm8sAykMuSHZZVcpL8y6U"/>
+<div class="absolute -bottom-1 -right-1 bg-secondary text-white px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider">PRO</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-xs">
+<h2 class="font-headline-sm text-headline-sm">王小明</h2>
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="text-on-surface-variant font-label-lg text-label-lg">ID: 888666</p>
+</div>
+<div class="flex items-center ml-auto">
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-bold text-label-lg flex items-center gap-xs shadow-sm hover:opacity-90 transition-all pressable" id="daily-check-in-btn" onclick="this.classList.replace('bg-primary-container', 'bg-surface-container-highest'); this.classList.replace('text-on-primary-container', 'text-on-surface-variant'); this.classList.add('pointer-events-none', 'opacity-60'); this.innerHTML = '&lt;span class=\'material-symbols-outlined text-[20px]\'&gt;check_circle&lt;/span&gt; 今日已打卡'; const toast = document.getElementById('check-in-toast'); toast.classList.replace('opacity-0', 'opacity-100'); toast.classList.replace('top-20', 'top-24'); const vitSpan = document.getElementById('current-vitality-value'); if(vitSpan) { let val = parseInt(vitSpan.innerText.replace(/,/g, '')); vitSpan.innerText = (val + 2).toLocaleString(); } setTimeout(() =&gt; { toast.classList.replace('opacity-100', 'opacity-0'); toast.classList.replace('top-24', 'top-20'); }, 3000);">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+                        每日打卡
+                    </button>
+</div>
+</div>
+<!-- Vitality Summary -->
+<div class="bg-white p-md rounded-lg custom-shadow flex flex-col gap-sm">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-baseline gap-xs">
+<span class="text-primary font-headline-lg text-headline-lg">Lv. 84</span>
+<span class="text-primary font-bold text-label-lg ml-1">九重天仙</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-on-surface-variant/60 font-bold text-[10px] mb-1">近三個月仙氣值</p>
+<p class="text-on-surface-variant font-label-lg text-label-lg">當前仙氣值: <span class="text-primary font-bold" id="current-vitality-value">1,240</span></p>
+</div>
+</div>
+<div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden mt-sm">
+<div class="h-full bg-primary w-[72%] rounded-full transition-all duration-500"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant font-bold mt-sm">
+<span>凡夫俗子</span>
+<span>脫胎換骨</span>
+</div>
+</div>
+<section class="mt-base">
+<h3 class="font-headline-sm text-headline-sm mb-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">history_edu</span>
+                    仙緣/渡劫紀錄
+                </h3>
+<div class="bg-white rounded-lg custom-shadow border border-primary/10 overflow-hidden flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary/5 text-on-surface-variant text-[12px] font-bold uppercase tracking-wider sticky top-0 z-10">
+<th class="px-md py-sm">日期</th>
+<th class="px-md py-sm">項目名稱</th>
+<th class="px-md py-sm text-right pr-xl">仙氣值變動</th>
+</tr>
+</thead>
+</table>
+</div>
+<div class="overflow-y-auto transition-all duration-300 hide-scrollbar" id="records-scroll-container" style="max-height: 135px; overflow-y: auto;">
+<table class="w-full text-left border-collapse">
+<tbody class="text-body-md"><tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium w-[20%]">11/30</td>
+<td class="px-md py-sm text-on-surface text-[14px]">完成「胡的台數」階段 1</td>
+<td class="px-md py-sm text-right text-primary font-bold w-[25%] pr-xl">+10</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/30</td>
+<td class="px-md py-sm text-on-surface text-[14px]">達成「相公次數」扣分項</td>
+<td class="px-md py-sm text-right text-secondary font-bold pr-xl">-10</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/26</td>
+<td class="px-md py-sm text-on-surface text-[14px]">對局結算獎勵</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+42</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/24</td>
+<td class="px-md py-sm text-on-surface text-[14px]">每日登入獎勵</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+5</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/20</td>
+<td class="px-md py-sm text-on-surface text-[14px]">完成「耐力驚人」紀錄</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+30</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/18</td>
+<td class="px-md py-sm text-on-surface text-[14px]">好友對局獎勵</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+15</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/15</td>
+<td class="px-md py-sm text-on-surface text-[14px]">完成累計損益目標</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+20</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">11/12</td>
+<td class="px-md py-sm text-on-surface text-[14px]">參與週賽獎勵</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+50</td>
+</tr>
+<tr class="border-b border-outline-variant/10">
+<td class="px-md py-sm text-[12px] text-on-surface-variant font-medium">10/28</td>
+<td class="px-md py-sm text-on-surface text-[14px]">月度修行結算</td>
+<td class="px-md py-sm text-right text-primary font-bold pr-xl">+100</td>
+</tr></tbody>
+</table>
+</div>
+<div class="p-sm bg-surface-container-low text-center border-t border-outline-variant/10">
+<button class="text-primary text-[12px] font-bold flex items-center justify-center gap-xs w-full" id="expand-records-btn" onclick="const container = document.getElementById('records-scroll-container'); const isExpanded = container.style.maxHeight === '360px'; container.style.maxHeight = isExpanded ? '135px' : '360px'; this.innerHTML = isExpanded ? '展開更多紀錄 &lt;span class=&quot;material-symbols-outlined text-[16px]&quot;&gt;expand_more&lt;/span&gt;' : '收起紀錄 &lt;span class=&quot;material-symbols-outlined text-[16px]&quot;&gt;expand_less&lt;/span&gt;';">
+                            展開更多紀錄
+                            <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+</section>
+</section>
+<!-- Match Calendar Grid -->
+<section class="mt-xl">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined">calendar_month</span>
+                    對局統計
+                </h3>
+</div>
+<!-- Date Range Picker -->
+<div class="bg-surface-container-low p-sm rounded-lg mb-md border border-outline-variant/30">
+<div class="flex items-center gap-xs overflow-x-auto hide-scrollbar w-full">
+<div class="flex-1 min-w-[100px]">
+<label class="text-[10px] font-bold text-on-surface-variant block mb-1">開始日期</label>
+<input class="w-full bg-white border-none rounded-md px-2 py-1 text-[12px] font-label-lg focus:ring-1 focus:ring-primary" type="date" value="2023-11-01"/>
+</div>
+<span class="text-on-surface-variant mt-4">~</span>
+<div class="flex-1 min-w-[100px]">
+<label class="text-[10px] font-bold text-on-surface-variant block mb-1">結束日期</label>
+<input class="w-full bg-white border-none rounded-md px-2 py-1 text-[12px] font-label-lg focus:ring-1 focus:ring-primary" type="date" value="2023-11-30"/>
+</div>
+<button class="mt-4 bg-primary text-white p-2 rounded-lg flex items-center justify-center pressable shadow-sm">
+<span class="material-symbols-outlined text-[18px]">search</span>
+<span class="text-[12px] font-bold ml-1 hidden sm:inline">搜尋</span>
+</button>
+</div>
+</div>
+<!-- Range Profit/Loss Card -->
+<div class="bg-primary/5 p-md rounded-lg border border-primary/10 flex justify-between items-center mb-base">
+<div>
+<p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">區間累計盈虧</p>
+<p class="text-primary font-headline-md text-headline-md">+115.7 <span class="text-label-lg font-label-lg">點</span></p>
+</div>
+<div class="text-right border-l border-outline-variant/30 pl-md">
+<p class="text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">累計局數</p>
+<p class="text-on-surface font-headline-sm text-headline-sm">24 <span class="text-label-lg font-label-lg">將</span></p>
+</div>
+</div>
+<div class="flex justify-end mb-1">
+<span class="text-on-surface-variant text-[11px] font-bold">2023年11月</span>
+</div>
+<div class="grid grid-cols-7 gap-1">
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold">一</div>
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold">二</div>
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold">三</div>
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold">四</div>
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold">五</div>
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold text-secondary">六</div>
+<div class="text-center font-label-lg text-on-surface-variant py-xs text-[10px] font-bold text-secondary">日</div>
+<div class="aspect-square border border-outline-variant/10 rounded-md p-1 relative opacity-30"><span class="absolute top-0.5 left-1 text-[8px]">30</span></div>
+<div class="aspect-square border border-outline-variant/10 rounded-md p-1 relative opacity-30"><span class="absolute top-0.5 left-1 text-[8px]">31</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">1</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">2</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative bg-surface-container flex flex-col items-center justify-center"><span class="absolute top-0.5 left-1 text-[8px]">3</span><div class="flex flex-col items-center leading-none"><span class="text-[18px] font-bold text-primary">+12</span><span class="text-[10px] text-on-surface-variant font-bold mt-1">2將</span></div></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">4</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">5</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">6</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative bg-surface-container flex flex-col items-center justify-center"><span class="absolute top-0.5 left-1 text-[8px]">7</span><div class="flex flex-col items-center leading-none"><span class="text-[18px] font-bold text-primary">+12</span><span class="text-[10px] text-on-surface-variant font-bold mt-1">2將</span></div></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">8</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">9</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative bg-surface-container flex flex-col items-center justify-center"><span class="absolute top-0.5 left-1 text-[8px]">10</span><div class="flex flex-col items-center leading-none"><span class="text-[18px] font-bold text-primary">+12</span><span class="text-[10px] text-on-surface-variant font-bold mt-1">2將</span></div></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">11</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">12</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">13</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">14</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">15</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">16</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">17</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">18</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">19</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">20</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">21</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">22</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">23</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">24</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">25</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative bg-surface-container flex flex-col items-center justify-center"><span class="absolute top-0.5 left-1 text-[8px]">26</span><div class="flex flex-col items-center leading-none"><span class="text-[18px] font-bold text-primary">+88</span><span class="text-[10px] text-on-surface-variant font-bold mt-1">5將</span></div></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">27</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative bg-surface-container flex flex-col items-center justify-center"><span class="absolute top-0.5 left-1 text-[8px]">28</span><div class="flex flex-col items-center leading-none"><span class="text-[18px] font-bold text-primary">+12</span><span class="text-[10px] text-on-surface-variant font-bold mt-1">2將</span></div></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative"><span class="absolute top-0.5 left-1 text-[8px]">29</span></div>
+<div class="aspect-square border border-outline-variant/20 rounded-md p-1 relative bg-surface-container flex flex-col items-center justify-center"><span class="absolute top-0.5 left-1 text-[8px]">30</span><div class="flex flex-col items-center leading-none"><span class="text-[18px] font-bold text-primary">+12</span><span class="text-[10px] text-on-surface-variant font-bold mt-1">2將</span></div></div>
+<div class="aspect-square border border-outline-variant/10 rounded-md p-1 relative opacity-30"><span class="absolute top-0.5 left-1 text-[8px]">1</span></div>
+<div class="aspect-square border border-outline-variant/10 rounded-md p-1 relative opacity-30"><span class="absolute top-0.5 left-1 text-[8px]">2</span></div>
+<div class="aspect-square border border-outline-variant/10 rounded-md p-1 relative opacity-30"><span class="absolute top-0.5 left-1 text-[8px]">3</span></div>
+</div>
+</section>
+<!-- Recent 5 Matches Chart -->
+<section class="mt-lg">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">show_chart</span>
+                    最近五場表現
+                </h3>
+</div>
+<div class="bg-white p-md rounded-lg custom-shadow h-64 relative flex flex-col border border-primary/5">
+<div class="flex-1 relative flex items-end justify-between px-md mb-8">
+<div class="absolute left-0 h-[80%] flex flex-col justify-between text-[10px] text-on-surface-variant border-r border-outline-variant/30 pr-1 z-10">
+<span>+100</span>
+<span>0</span>
+<span>-100</span>
+</div>
+<div class="relative w-full h-full ml-6">
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<line opacity="0.3" stroke="#73796e" stroke-dasharray="2,2" stroke-width="0.5" x1="0" x2="100" y1="50" y2="50"></line>
+<polyline fill="none" points="0,45 25,20 50,75 75,10 100,40" stroke="#436738" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" vector-effect="non-scaling-stroke"></polyline>
+<!-- Data point dots/markers removed as per edit request -->
+</svg>
+<div class="absolute inset-0 w-full h-full pointer-events-none font-bold text-[11px]">
+<div class="absolute text-primary w-10 text-center" style="left: 0%; top: 45%; transform: translate(-50%, -120%);">+45</div>
+<div class="absolute text-primary w-10 text-center" style="left: 25%; top: 20%; transform: translate(-50%, -120%);">+72</div>
+<div class="absolute text-secondary w-10 text-center" style="left: 50%; top: 75%; transform: translate(-50%, 20%);">-42</div>
+<div class="absolute text-primary w-10 text-center" style="left: 75%; top: 10%; transform: translate(-50%, -120%);">+95</div>
+<div class="absolute text-primary w-10 text-center" style="left: 100%; top: 40%; transform: translate(-50%, -120%);">+18</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between ml-6 border-t border-outline-variant/20 pt-2">
+<div class="flex flex-col items-center w-8"><span class="text-[10px] text-on-surface-variant font-bold">11/20</span></div>
+<div class="flex flex-col items-center w-8"><span class="text-[10px] text-on-surface-variant font-bold">11/22</span></div>
+<div class="flex flex-col items-center w-8"><span class="text-[10px] text-on-surface-variant font-bold">11/25</span></div>
+<div class="flex flex-col items-center w-8"><span class="text-[10px] text-on-surface-variant font-bold">11/26</span></div>
+<div class="flex flex-col items-center w-8"><span class="text-[10px] text-on-surface-variant font-bold">11/30</span></div>
+</div>
+</div>
+</section>
+<!-- Xianyou Records -->
+<section class="mt-lg">
+<h3 class="font-headline-sm text-headline-sm mb-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+                仙友記事
+            </h3>
+<div class="bg-white p-md rounded-lg custom-shadow border border-primary/10 flex flex-col gap-sm mb-md">
+<div class="flex flex-col gap-xs">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">紀錄日期</label>
+<input class="w-full bg-surface-container-low border border-outline-variant/30 rounded-full px-4 py-2 text-[14px] font-label-lg focus:ring-1 focus:ring-primary focus:outline-none" type="date" value="2023-11-30"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">心情或備註</label>
+<textarea class="w-full bg-surface-container-low border border-outline-variant/30 rounded-xl px-4 py-2 text-[14px] font-body-md focus:ring-1 focus:ring-primary focus:outline-none min-h-[80px]" placeholder="今天胡了大三元！"></textarea>
+</div>
+<button class="bg-primary text-white font-bold py-3 rounded-full pressable flex items-center justify-center gap-xs mt-xs shadow-md">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    新增記事
+                </button>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="bg-surface-container-low p-md rounded-lg border border-outline-variant/20 flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full w-fit">2023.11.30</span>
+<p class="text-body-md text-on-surface leading-relaxed">終於胡了大三元，今天運勢極佳！</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm cursor-pointer">more_vert</span>
+</div>
+<div class="bg-surface-container-low p-md rounded-lg border border-outline-variant/20 flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full w-fit">2023.11.28</span>
+<p class="text-body-md text-on-surface leading-relaxed">遇到強勁對手，雖然輸了但學到很多。下次要更注意防守。</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant/40 text-sm cursor-pointer">more_vert</span>
+</div>
+</div>
+</section>
+<!-- Achievement System -->
+<section class="mt-lg">
+<h3 class="font-headline-sm text-headline-sm mb-md text-on-surface flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+                成就挑戰
+            </h3>
+<div class="grid grid-cols-1 gap-md">
+<!-- Achievement Card 1: 連勝之路 -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-primary/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface flex items-center gap-xs">連勝之路 <span class="flex items-center gap-1 ml-2 text-[10px] text-primary font-medium bg-primary/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">三界連勝</span> <span class="text-[10px] opacity-60 font-normal ml-1">連勝 3 場</span></span></h4>
+</div>
+</div>
+<div class="text-right">
+<span class="text-primary font-bold text-label-lg">4/5</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex relative">
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 w-[20%]"></div>
+<div class="absolute h-2 bg-primary rounded-full transition-all duration-500" style="width: 32%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic">下一階：七星報喜 (還需 1 場連勝)</span>
+<span class="font-bold text-primary">達成獎勵 +50 仙氣值</span>
+</div>
+</div>
+<!-- Achievement Card: 大牌成就 -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-primary/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface flex items-center gap-xs">胡的台數 <span class="flex items-center gap-1 ml-2 text-[10px] text-primary font-medium bg-primary/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">8台</span> <span class="text-[10px] opacity-60 font-normal ml-1">胡出 1 次 8 台以上</span></span></h4>
+</div>
+</div>
+<div class="text-right">
+<span class="text-primary font-bold text-label-lg">2/5</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex relative">
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 w-[20%]"></div>
+<div class="absolute h-2 bg-primary rounded-full transition-all duration-500" style="width: 25%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic">下一階：聲名遠播 (還差 3 次)</span>
+<span class="font-bold text-primary">達成獎勵仙氣值</span>
+</div>
+</div>
+<!-- Achievement Card 2: 累計損益 -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-secondary/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface flex items-center gap-xs">累計損益 <span class="flex items-center gap-1 ml-2 text-[10px] text-primary font-medium bg-primary/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">點石成金</span> <span class="text-[10px] opacity-60 font-normal ml-1">累積贏 5,000</span></span></h4>
+</div>
+</div>
+<div class="text-right">
+<span class="text-on-surface-variant font-bold text-label-lg">目標 10k</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex relative">
+<div class="h-full bg-primary/10 w-full"></div>
+<div class="absolute h-2 bg-primary rounded-full transition-all duration-500" style="width: 12.5%;"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic">距離下一階「財源滾滾」還差 8,746</span>
+<span class="font-bold text-primary">下一階獎勵 +20 仙氣值</span>
+</div>
+</div>
+<!-- Achievement Card 4: 當日最多將 -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-primary/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">當日最多將 <span class="flex items-center gap-1 ml-2 text-[10px] text-primary font-medium bg-primary/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">3將</span> <span class="text-[10px] opacity-60 font-normal ml-1">單日打滿 3 將</span></span></h4>
+<p class="text-[10px] text-on-surface-variant">階段 2：<span class="text-primary font-bold">耐力驚人</span></p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-primary font-bold text-label-lg">5/5</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex relative">
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[13%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[13%]"></div>
+<div class="h-full bg-primary/20 w-[34%]"></div>
+<div class="absolute h-2 bg-primary rounded-full transition-all duration-500" style="width: 33%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic">下一階：熬夜戰神 (還需 3 將)</span>
+<span class="font-bold text-primary">累計獎勵 +30 仙氣值</span>
+</div>
+</div>
+<!-- Achievement Card 5: 連莊紀錄 -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-primary/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">timer</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface flex items-center gap-xs">連莊紀錄 <span class="flex items-center gap-1 ml-2 text-[10px] text-primary font-medium bg-primary/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">椅子長刺</span> <span class="text-[10px] opacity-60 font-normal ml-1">連莊 3 次</span></span></h4>
+</div>
+</div>
+<div class="text-right">
+<span class="text-primary font-bold text-label-lg">5/5</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-high rounded-full overflow-hidden flex relative">
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 border-r border-white w-[20%]"></div>
+<div class="h-full bg-primary/20 w-[20%]"></div>
+<div class="absolute h-2 bg-primary rounded-full transition-all duration-500" style="width: 40%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic">下一階：仙路有你 (還需 3 將)</span>
+<span class="font-bold text-primary">累計獎勵 +30 仙氣值</span>
+</div>
+</div>
+<!-- Achievement Card 6: 連敗紀錄 (Negative) -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-error/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">trending_down</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface flex items-center gap-xs">悲慘盃 - 連敗紀錄 <span class="flex items-center gap-1 ml-2 text-[10px] text-error font-medium bg-error/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">衰神附體</span> <span class="text-[10px] opacity-60 font-normal ml-1">連敗 3 場</span></span></h4>
+</div>
+</div>
+<div class="text-right">
+<span class="text-error font-bold text-label-lg">2/3</span>
+</div>
+</div>
+<div class="w-full h-2 bg-error-container rounded-full overflow-hidden flex relative">
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full w-[20%]"></div>
+<div class="absolute h-2 bg-error rounded-full transition-all duration-500" style="width: 30%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic">距離「霉運當頭」扣分還差 1 場</span>
+<span class="font-bold text-error">達成將扣除 10 仙氣值</span>
+</div>
+</div>
+<!-- Achievement Card 7: 相公次數 (Negative) -->
+<div class="bg-white p-md rounded-lg custom-shadow border border-error/10 flex flex-col gap-base">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full bg-error/10 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">sentiment_very_dissatisfied</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface flex items-center gap-xs">相公次數 <span class="flex items-center gap-1 ml-2 text-[10px] text-error font-medium bg-error/5 px-1.5 py-0.5 rounded"><span class="material-symbols-outlined text-[12px] font-bold">check</span> <span class="text-[12px] font-bold">腦袋斷訊</span> <span class="text-[10px] opacity-60 font-normal ml-1">相公 3 次</span></span></h4>
+</div>
+</div>
+<div class="text-right">
+<span class="text-error font-bold text-label-lg">3/3</span>
+</div>
+</div>
+<div class="w-full h-2 bg-error-container rounded-full overflow-hidden flex relative">
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full border-r border-white/30 w-[20%]"></div>
+<div class="h-full w-[20%]"></div>
+<div class="absolute h-2 bg-error rounded-full transition-all duration-500" style="width: 40%"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span class="italic text-error font-bold">已達成「仙界大迷糊」扣分條件！</span>
+<span class="font-bold text-error">-10 仙氣值</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe pt-xs max-w-[600px] left-1/2 -translate-x-1/2 bg-surface-container-high shadow-[0_-4px_20px_rgba(93,87,79,0.08)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs pressable" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">大廳</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-2xl px-lg py-xs pressable" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-lg text-label-lg">統計</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs pressable" href="#">
+<span class="material-symbols-outlined">edit_note</span>
+<span class="font-label-lg text-label-lg">記帳</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-lg py-xs pressable" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-lg text-label-lg">排行</span>
+</a>
+</nav>
+</body></html>
